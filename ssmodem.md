@@ -1,3 +1,4 @@
+
 ---
 layout: default
 title: "SEGA SATURN Modem PART 1"
@@ -106,65 +107,61 @@ Solder a JST connector to the input of the step-up converter.
 ![Wiring diagram](./assets/img/ssmodem/1_diagram.png)
 <p style="text-align:center"><i>Wiring diagram</i></p>
 
-Bend the capacitor and the resistor over the board, then twist the capaictor's negative sleg with the free resistor's leg. 
-**⚠️ IMPORTANT**: what carefuly about the capacitor polarity ! 
+Bend the capacitor and the resistor over the board. Then, twist the capacitor’s negative leg together with the free leg of the resistor.  
+**⚠️ IMPORTANT**: Pay close attention to the capacitor’s polarity!
 
 ![Capacitor and resistor assembly](./assets/img/ssmodem/2020_0102_043141_004.jpg)
 <p style="text-align:center"><i>Capacitor and resistor assembly</i></p>
 
-Use a heatshrink to cover the twisted legs, and solder the JST cable to both the Step-Up's positive pad, and the twited legs : 
+Use heat shrink tubing to cover the twisted legs. Then, solder the JST cable to both the Step-Up's positive pad and the twisted legs:
 
 ![Board Configured](./assets/img/ssmodem/2020_0118_222140_007.jpg)
 <p style="text-align:center"><i>Step-Up JST cable assembly</i></p>
 
-To be extra cautious, I choose the solder both negative pads together using the resistor's leg, I am not sure if this is useful.
+As an extra precaution, I chose to solder both negative pads together using the resistor’s leg—though I’m not certain this is strictly necessary.
 
 ![Step-Up grounding](./assets/img/ssmodem/2020_0118_222437_008.jpg)
 <p style="text-align:center"><i>Step-Up grounding</i></p>
 
 ### Curing
 
-Again, coating may be good idea (I used MG Chemicals 422C, which is fluorescent under UV-A light) :
+Again, applying a protective coating is a good idea. I used MG Chemicals 422C, which fluoresces under UV-A light:
 
 ![Step-Up board coating](./assets/img/ssmodem/PXL_20250628_174654179.jpg)
 <p style="text-align:center"><i>Step-Up board coating</i></p>
 
 ## Validation
 
-At this point, all the parts are ready to be assemble all together :
+At this point, all parts are ready to be assembled:
 
 ![Parts](./assets/img/ssmodem/PXL_20250628_190647493.jpg)
 <p style="text-align:center"><i>Parts</i></p>
 
-Connect the Step-Up converter to the modem using the JST connectors, once connected, it is time to test, one good first test is to inject 5V into the USB port to validate that the Step-Up board is powering up, then connect to a multimeter to read the drawn amps, during my tests I read 4.85V/0.07A.  
+Connect the Step-Up converter to the modem using the JST connectors. Once connected, it's time to test.
+
+A good first test is to inject 5V into the USB port and confirm that the Step-Up board powers on. Then, use a multimeter to read the current draw. During my test, I measured 4.85V at 0.07A.
 
 ![Validation](./assets/img/ssmodem/PXL_20250628_191111627.jpg)
 <p style="text-align:center"><i>Validation</i></p>
 
-Finally, connecting it to a Rasperry pi to check that all the 3 leds are lit and the modem is properly detected.
+Next, connect the modem to a Raspberry Pi and confirm that all three LEDs are lit and the device is recognized correctly.
 
-> usb 1-1.4: new full-speed USB device number 3 using xhci_hcd
-> 
-> usb 1-1.4: New USB device found, idVendor=0572, idProduct=1324, bcdDevice= 1.00
-> 
-> usb 1-1.4: New USB device strings: Mfr=1, Product=2, SerialNumber=3
-> 
-> usb 1-1.4: Product: USB Modem
-> 
-> usb 1-1.4: Manufacturer: Conexant
-> 
-> usb 1-1.4: SerialNumber: 24680246
-> 
-> cdc_acm 1-1.4:1.0: ttyACM0: USB ACM device
-> 
-> usbcore: registered new interface driver cdc_acm
-> 
-> cdc_acm: USB Abstract Control Model driver for USB modems and ISDN adapters
+```text
+usb 1-1.4: new full-speed USB device number 3 using xhci_hcd
+usb 1-1.4: New USB device found, idVendor=0572, idProduct=1324, bcdDevice= 1.00
+usb 1-1.4: New USB device strings: Mfr=1, Product=2, SerialNumber=3
+usb 1-1.4: Product: USB Modem
+usb 1-1.4: Manufacturer: Conexant
+usb 1-1.4: SerialNumber: 24680246
+cdc_acm 1-1.4:1.0: ttyACM0: USB ACM device
+usbcore: registered new interface driver cdc_acm
+cdc_acm: USB Abstract Control Model driver for USB modems and ISDN adapters
+```
 
 ## Final Assembly
 
-![Folding all withing the case](./assets/img/ssmodem/PXL_20250628_194322102.jpg)
-<p style="text-align:center"><i>Folding all withing the case</i></p>
+![Folding all within the case](./assets/img/ssmodem/PXL_20250628_194322102.jpg)
+<p style="text-align:center"><i>Folding everything within the case</i></p>
 
 ## Result
 
