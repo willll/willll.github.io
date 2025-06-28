@@ -1,0 +1,415 @@
+<project version="0.90" title="schema">
+    <properties>
+        <property show="1" name="savedtime">13:02</property>
+        <property show="1" name="saveddate-us">2025-06-28</property>
+        <property show="1" name="savedfilepath">/home/will/tmp/willll.github.io/_site/docs/schema.qet</property>
+        <property show="1" name="savedfilename">schema</property>
+        <property show="1" name="saveddate-eu">28-06-2025</property>
+        <property show="1" name="saveddate">6/28/25</property>
+    </properties>
+    <newdiagrams>
+        <border cols="17" colsize="60" displaycols="true" rows="8" displayrows="true" rowsize="80"/>
+        <inset plant="" indexrev="" date="null" displayAt="bottom" auto_page_num="" filename="" author="" locmach="" version="" folio="%id/%total" title=""/>
+        <conductors vertical-alignment="AlignRight" color2="#000000" text_color="#000000" bicolor="false" type="multi" onetextperfolio="0" vertirotatetext="270" horizontal-alignment="AlignBottom" conductor_color="" condsize="1" displaytext="1" dash-size="1" cable="" numsize="7" horizrotatetext="0" num="_" tension_protocol="" bus="" formula="" function="" conductor_section=""/>
+        <report label="%f-%l%c"/>
+        <xrefs>
+            <xref offset="0" slave_label="(%f-%l%c)" delayprefix="" snapto="label" xrefpos="" master_label="%f-%l%c" switchprefix="" powerprefix="" showpowerctc="true" type="protection" displayhas="cross"/>
+            <xref offset="0" slave_label="(%f-%l%c)" delayprefix="" snapto="label" xrefpos="" master_label="%f-%l%c" switchprefix="" powerprefix="" showpowerctc="true" type="commutator" displayhas="cross"/>
+            <xref offset="0" slave_label="(%f-%l%c)" delayprefix="" snapto="label" xrefpos="" master_label="%f-%l%c" switchprefix="" powerprefix="" showpowerctc="true" type="coil" displayhas="cross"/>
+        </xrefs>
+        <conductors_autonums freeze_new_conductors="false" current_autonum=""/>
+        <folio_autonums/>
+        <element_autonums current_autonum="" freeze_new_elements="false"/>
+    </newdiagrams>
+    <diagram displayrows="true" date="null" cols="17" displaycols="true" locmach="" folio="%id/%total" freezeNewElement="false" version="0.90" title="" displayAt="bottom" rows="8" author="" freezeNewConductor="false" filename="" height="660" auto_page_num="" rowsize="80" plant="" colsize="60" order="1" indexrev="">
+        <defaultconductor vertical-alignment="AlignRight" color2="#000000" text_color="#000000" bicolor="false" type="multi" onetextperfolio="0" vertirotatetext="270" horizontal-alignment="AlignBottom" conductor_color="" condsize="1" displaytext="1" dash-size="1" cable="" numsize="7" horizrotatetext="0" num="_" tension_protocol="" bus="" formula="" function="" conductor_section=""/>
+        <elements>
+            <element x="440" y="380" prefix="" freezeLabel="false" z="10" orientation="0" uuid="{6479255e-8848-4078-ada0-4e04ad5c8d3a}" type="embed://import/10_electric/91_en_60617/en_60617_02/en_60617_02_02/en_60617_02_02_13.elmt">
+                <terminals/>
+                <inputs/>
+                <elementInformations>
+                    <elementInformation show="1" name="formula"></elementInformation>
+                </elementInformations>
+                <dynamic_texts>
+                    <dynamic_elmt_text text_from="ElementInfo" Halignment="AlignLeft" x="5" y="2.5" rotation="0" text_width="-1" Valignment="AlignTop" frame="false" keep_visual_rotation="true" uuid="{158507db-88a4-40c6-9b0a-ed7626dbeb71}" font="Sans Serif,9,-1,5,0,0,0,0,0,0,normal">
+                        <text></text>
+                        <info_name>label</info_name>
+                    </dynamic_elmt_text>
+                </dynamic_texts>
+                <texts_groups/>
+            </element>
+            <element x="320" y="320" prefix="R" freezeLabel="false" z="10" orientation="0" uuid="{0c5413bd-3a50-4f5e-b09d-10854e1d1d70}" type="embed://import/10_electric/10_allpole/395_electronics_semiconductors/01_resistors/resistance.elmt">
+                <terminals>
+                    <terminal x="0" y="-16" orientation="0" id="0"/>
+                    <terminal x="0" y="16" orientation="2" id="1"/>
+                </terminals>
+                <inputs/>
+                <elementInformations>
+                    <elementInformation show="1" name="label">Resistor</elementInformation>
+                </elementInformations>
+                <dynamic_texts>
+                    <dynamic_elmt_text text_from="ElementInfo" Halignment="AlignLeft" x="16" y="-11.5" rotation="0" text_width="-1" Valignment="AlignTop" frame="false" keep_visual_rotation="false" uuid="{45c49588-6ba2-4e0a-a883-69718005120f}" font="Sans Serif,9,-1,5,50,0,0,0,0,0">
+                        <text>Resistor</text>
+                        <info_name>label</info_name>
+                    </dynamic_elmt_text>
+                </dynamic_texts>
+                <texts_groups/>
+            </element>
+            <element x="320" y="370" prefix="C" freezeLabel="false" z="10" orientation="2" uuid="{dab34ec8-ba20-4f5c-bc11-f26d9979af37}" type="embed://import/10_electric/10_allpole/395_electronics_semiconductors/02_capacitors/condensateur_electrolytique.elmt">
+                <terminals>
+                    <terminal x="0" y="-6" orientation="0" id="2"/>
+                    <terminal x="0" y="6" orientation="2" id="3"/>
+                </terminals>
+                <inputs/>
+                <elementInformations>
+                    <elementInformation show="1" name="label">Capacitor</elementInformation>
+                </elementInformations>
+                <dynamic_texts>
+                    <dynamic_elmt_text text_from="ElementInfo" Halignment="AlignLeft" x="-10" y="10" rotation="180" text_width="-1" Valignment="AlignTop" frame="false" keep_visual_rotation="false" uuid="{d686eaa6-c9f5-4312-87b7-f25e40303659}" font="Sans Serif,9,-1,5,50,0,0,0,0,0">
+                        <text>Capacitor</text>
+                        <info_name>label</info_name>
+                    </dynamic_elmt_text>
+                </dynamic_texts>
+                <texts_groups/>
+            </element>
+            <element x="440" y="290" prefix="" freezeLabel="false" z="10" orientation="0" uuid="{42983344-384e-4d6f-8d85-d24dc1dec8b9}" type="embed://import/10_electric/91_en_60617/en_60617_02/en_60617_02_02/en_60617_02_02_14.elmt">
+                <terminals/>
+                <inputs/>
+                <elementInformations>
+                    <elementInformation show="1" name="formula"></elementInformation>
+                </elementInformations>
+                <dynamic_texts>
+                    <dynamic_elmt_text text_from="ElementInfo" Halignment="AlignLeft" x="5" y="2.5" rotation="0" text_width="-1" Valignment="AlignTop" frame="false" keep_visual_rotation="true" uuid="{057da6cd-a765-437d-be0d-581faa08e1b3}" font="Sans Serif,9,-1,5,0,0,0,0,0,0,normal">
+                        <text></text>
+                        <info_name>label</info_name>
+                    </dynamic_elmt_text>
+                </dynamic_texts>
+                <texts_groups/>
+            </element>
+            <element x="320" y="370" prefix="" freezeLabel="false" z="10" orientation="0" uuid="{e152c007-58cf-4312-9fef-6248a739748f}" type="embed://import/10_electric/91_en_60617/en_60617_02/en_60617_02_02/en_60617_02_02_13.elmt">
+                <terminals/>
+                <inputs/>
+                <elementInformations>
+                    <elementInformation show="1" name="formula"></elementInformation>
+                </elementInformations>
+                <dynamic_texts>
+                    <dynamic_elmt_text text_from="ElementInfo" Halignment="AlignLeft" x="5" y="2.5" rotation="0" text_width="-1" Valignment="AlignTop" frame="false" keep_visual_rotation="true" uuid="{13bfef20-d720-42d4-b866-5f72c92b11f1}" font="Sans Serif,9,-1,5,0,0,0,0,0,0,normal">
+                        <text></text>
+                        <info_name>label</info_name>
+                    </dynamic_elmt_text>
+                </dynamic_texts>
+                <texts_groups/>
+            </element>
+        </elements>
+        <conductors>
+            <conductor vertical-alignment="AlignRight" freezeLabel="false" color2="#000000" text_color="#000000" bicolor="false" terminal1="{cca3b3c1-90c2-4fd8-9f40-7474f4778403}" type="multi" onetextperfolio="0" rotation="540" vertirotatetext="270" horizontal-alignment="AlignBottom" conductor_color="" condsize="1" y="0" displaytext="1" dash-size="1" cable="" x="0" element1="{dab34ec8-ba20-4f5c-bc11-f26d9979af37}" numsize="7" horizrotatetext="0" num="_" tension_protocol="" bus="" element2="{0c5413bd-3a50-4f5e-b09d-10854e1d1d70}" terminal2="{09a3060b-a0fd-41ad-b605-f5c0ae63901e}" formula="" function="" conductor_section="">
+                <sequentialNumbers/>
+            </conductor>
+        </conductors>
+        <inputs>
+            <input text="&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;>&#xa;&lt;html>&lt;head>&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; />&lt;style type=&quot;text/css&quot;>&#xa;p, li { white-space: pre-wrap; }&#xa;&lt;/style>&lt;/head>&lt;body style=&quot; font-family:'Sans Serif'; font-size:9pt; font-weight:0; font-style:normal;&quot;>&#xa;&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;>JST Connector&lt;/p>&lt;/body>&lt;/html>" x="160" y="300" rotation="0" font="Sans Serif,9,-1,5,0,0,0,0,0,0,normal"/>
+            <input text="&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;>&#xa;&lt;html>&lt;head>&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; />&lt;style type=&quot;text/css&quot;>&#xa;p, li { white-space: pre-wrap; }&#xa;&lt;/style>&lt;/head>&lt;body style=&quot; font-family:'Sans Serif'; font-size:9pt; font-weight:0; font-style:normal;&quot;>&#xa;&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;>Step-Up board&lt;/p>&lt;/body>&lt;/html>" x="430" y="230" rotation="0" font="Sans Serif,9,-1,5,0,0,0,0,0,0,normal"/>
+        </inputs>
+        <shapes>
+            <shape x2="320" x1="320" z="0" closed="0" y1="400" y2="380" is_movable="1" type="Line">
+                <pen style="SolidLine" widthF="1" color="#000000"/>
+                <brush style="NoBrush" color="#000000"/>
+            </shape>
+            <shape x2="450" x1="320" z="0" closed="0" y1="300" y2="300" is_movable="1" type="Line">
+                <pen style="SolidLine" widthF="1" color="#000000"/>
+                <brush style="NoBrush" color="#000000"/>
+            </shape>
+            <shape x2="450" x1="320" z="0" closed="0" y1="400" y2="400" is_movable="1" type="Line">
+                <pen style="SolidLine" widthF="1" color="#000000"/>
+                <brush style="NoBrush" color="#000000"/>
+            </shape>
+            <shape x2="510" x1="450" rx="20" z="0" closed="0" y1="260" y2="420" is_movable="1" type="Rectangle" ry="20">
+                <pen style="SolidLine" widthF="1" color="#000000"/>
+                <brush style="NoBrush" color="#000000"/>
+            </shape>
+            <shape x2="220" x1="320" z="0" closed="0" y1="400" y2="400" is_movable="1" type="Line">
+                <pen style="SolidLine" widthF="1" color="#000000"/>
+                <brush style="NoBrush" color="#000000"/>
+            </shape>
+            <shape x2="220" x1="320" z="0" closed="0" y1="340" y2="340" is_movable="1" type="Line">
+                <pen style="SolidLine" widthF="1" color="#000000"/>
+                <brush style="NoBrush" color="#000000"/>
+            </shape>
+            <shape x2="220" x1="180" rx="20" z="0" closed="0" y1="330" y2="410" is_movable="1" type="Rectangle" ry="20">
+                <pen style="SolidLine" widthF="1" color="#000000"/>
+                <brush style="NoBrush" color="#000000"/>
+            </shape>
+        </shapes>
+    </diagram>
+    <collection>
+        <category name="import">
+            <names>
+                <name lang="da">Importerede elementer</name>
+                <name lang="ja">インバートされた要素</name>
+                <name lang="ru">Импортированные элементы</name>
+                <name lang="pl">Elementy importowane</name>
+                <name lang="fr">Éléments importés</name>
+                <name lang="nl">Elementen geïmporteerd</name>
+                <name lang="de">Importierte elemente</name>
+                <name lang="es">Elementos importados</name>
+                <name lang="cs">Zavedené prvky</name>
+                <name lang="pt">elementos importados</name>
+                <name lang="hr">Uvezeni elementi</name>
+                <name lang="sl">Uvoženi elementi</name>
+                <name lang="it">Elementi importati</name>
+                <name lang="uk">Імпортовані елементи</name>
+                <name lang="ro">Elemente importate</name>
+                <name lang="ca">Elements importats</name>
+                <name lang="en">Imported elements</name>
+                <name lang="el">Εισηγμένα στοιχεία</name>
+                <name lang="tr">İthal öğeler</name>
+            </names>
+            <category name="10_electric">
+                <names>
+                    <name lang="it">Elettrica</name>
+                    <name lang="fr">Electrique</name>
+                    <name lang="en">Electric</name>
+                    <name lang="pl">Elektrotechnika</name>
+                    <name lang="ja">電気</name>
+                    <name lang="da">Elektrisk</name>
+                    <name lang="es">Eléctrica</name>
+                    <name lang="el">Ηλεκτρικά</name>
+                    <name lang="ru">Электротехника</name>
+                    <name lang="de">Elektrik</name>
+                    <name lang="nl">Elektrotechniek</name>
+                    <name lang="cs">Elektrotechnika</name>
+                </names>
+                <category name="10_allpole">
+                    <names>
+                        <name lang="it">Multifilare</name>
+                        <name lang="fr">Multifilaire</name>
+                        <name lang="hu">Többvonalas szimbólumok</name>
+                        <name lang="en">All-pole</name>
+                        <name lang="pl">Schematy wieloliniowe</name>
+                        <name lang="ja">複線</name>
+                        <name lang="da">Flere ledere</name>
+                        <name lang="es">Multifilar</name>
+                        <name lang="el">Πολυγραμμικό</name>
+                        <name lang="ru">Многополюсные</name>
+                        <name lang="de">Allpolig</name>
+                        <name lang="nl">Veel polig</name>
+                        <name lang="cs">Vícežilový</name>
+                    </names>
+                    <category name="395_electronics_semiconductors">
+                        <names>
+                            <name lang="fr">Electronique et semi-conducteurs</name>
+                            <name lang="it">Elettronica e semiconduttori</name>
+                            <name lang="en">Electronics and semiconductors</name>
+                            <name lang="pl">Elektronika i półprzewodniki</name>
+                            <name lang="ja">電子と半導体</name>
+                            <name lang="es">Electrónica y semiconductores</name>
+                            <name lang="el">Ηλεκτρονικά και ημιαγωγοί</name>
+                            <name lang="ru">Электроника и полупроводники</name>
+                            <name lang="de">Elektronik und Halbleiter</name>
+                            <name lang="nl">Electronica en halfgeleiders</name>
+                            <name lang="cs">Elektronika a polovodiče</name>
+                        </names>
+                        <category name="01_resistors">
+                            <names>
+                                <name lang="it">Resistori</name>
+                                <name lang="fr">Résistances</name>
+                                <name lang="ar">مُقاومة</name>
+                                <name lang="en">Resistors</name>
+                                <name lang="pt">Resistência</name>
+                                <name lang="pl">Rezystory</name>
+                                <name lang="es">Resistencias</name>
+                                <name lang="el">Αντιστάσεις</name>
+                                <name lang="ru">Резисторы</name>
+                                <name lang="de">Widerstände</name>
+                                <name lang="nl">Weerstand</name>
+                                <name lang="cs">Odpory</name>
+                            </names>
+                            <element name="resistance.elmt">
+                                <definition hotspot_x="10" hotspot_y="24" height="50" width="20" version="0.90" type="element" link_type="simple">
+                                    <uuid uuid="{62e0efb8-5623-48aa-baca-18ccf04faa78}"/>
+                                    <names>
+                                        <name lang="fr">Résistance</name>
+                                        <name lang="pt">Resistência</name>
+                                        <name lang="it">Resistore</name>
+                                        <name lang="ru">Резистор</name>
+                                        <name lang="de">Widerstand</name>
+                                        <name lang="cs">Odpor</name>
+                                        <name lang="el">Αντίσταση</name>
+                                        <name lang="es">Resistencia</name>
+                                        <name lang="pl">Rezystor</name>
+                                        <name lang="ar">مُقاومة</name>
+                                        <name lang="nl">Weerstand</name>
+                                        <name lang="en">Resistor</name>
+                                    </names>
+                                    <elementInformations/>
+                                    <informations>EN 60617: 04-01-01</informations>
+                                    <description>
+                                        <line x2="0" length1="1.5" style="line-style:normal;line-weight:normal;filling:none;color:black" x1="0" y1="20" y2="-20" antialias="false" end2="none" length2="1.5" end1="none"/>
+                                        <dynamic_text text_from="ElementInfo" Halignment="AlignLeft" x="6" y="-11.5" rotation="0" z="7" text_width="-1" Valignment="AlignTop" keep_visual_rotation="false" frame="false" uuid="{570cd854-578d-4c4b-bd2a-3498353e46b6}" font="Sans Serif,9,-1,5,50,0,0,0,0,0">
+                                            <text/>
+                                            <info_name>label</info_name>
+                                        </dynamic_text>
+                                        <rect style="line-style:normal;line-weight:normal;filling:white;color:black" height="20" x="-4" width="8" y="-10" rx="0" antialias="false" ry="0"/>
+                                        <terminal x="0" y="-20" orientation="n" uuid="{4410c57c-3796-4696-b63b-d8d5a0c9b788}" name="A1" type="Generic"/>
+                                        <terminal x="0" y="20" orientation="s" uuid="{09a3060b-a0fd-41ad-b605-f5c0ae63901e}" name="A2" type="Generic"/>
+                                    </description>
+                                </definition>
+                            </element>
+                        </category>
+                        <category name="02_capacitors">
+                            <names>
+                                <name lang="it">Condensatori</name>
+                                <name lang="fr">Capacités</name>
+                                <name lang="ar">مُكثّف</name>
+                                <name lang="en">Capacitors</name>
+                                <name lang="pt">Condensador</name>
+                                <name lang="pl">Kondensatory</name>
+                                <name lang="es">Condensadores</name>
+                                <name lang="el">Πυκνωτές</name>
+                                <name lang="ru">Конденсаторы</name>
+                                <name lang="de">Kapazitäten</name>
+                                <name lang="nl">Condensatoren</name>
+                                <name lang="cs">Kondenzátory</name>
+                            </names>
+                            <element name="condensateur_electrolytique.elmt">
+                                <definition hotspot_x="9" hotspot_y="14" height="30" width="20" version="0.90" type="element" link_type="simple">
+                                    <uuid uuid="{39d0db7e-f557-46b7-954e-0e27e8282012}"/>
+                                    <names>
+                                        <name lang="es">Condensador polarizádo</name>
+                                        <name lang="en"> Polarized capacitor</name>
+                                        <name lang="de">Elektrolytkondensator</name>
+                                        <name lang="fr">Condensateur electrolytique</name>
+                                        <name lang="el">Πυκνωτής με πολικότητα</name>
+                                        <name lang="it">Condensatore elettrolitico</name>
+                                        <name lang="ar">مُكثّف كيميائي</name>
+                                        <name lang="cs">Elektrolytický kondenzátor</name>
+                                        <name lang="nl">Condensator electrolytisch</name>
+                                        <name lang="pl">Kondensator elektrolityczny</name>
+                                    </names>
+                                    <elementInformations/>
+                                    <informations>EN 60617: 04-02-05</informations>
+                                    <description>
+                                        <dynamic_text text_from="ElementInfo" Halignment="AlignLeft" x="6" rotation="0" y="-11.95" z="1" Valignment="AlignTop" text_width="-1" frame="false" keep_visual_rotation="false" uuid="{6155d537-9075-4cb3-ad3d-c3aaa7f1dde5}" font="Sans Serif,9,-1,5,50,0,0,0,0,0">
+                                            <text/>
+                                            <info_name>label</info_name>
+                                        </dynamic_text>
+                                        <line length1="1.5" x2="6" style="line-style:normal;line-weight:normal;filling:none;color:black" x1="2" y1="-6" y2="-6" antialias="false" length2="1.5" end2="none" end1="none"/>
+                                        <line length1="1.5" x2="4" style="line-style:normal;line-weight:normal;filling:none;color:black" x1="4" y1="-4" y2="-8" antialias="false" length2="1.5" end2="none" end1="none"/>
+                                        <line length1="1.5" x2="0" style="line-style:normal;line-weight:normal;filling:none;color:black" x1="0" y1="-2" y2="-10" antialias="false" length2="1.5" end2="none" end1="none"/>
+                                        <line length1="1.5" x2="0" style="line-style:normal;line-weight:normal;filling:none;color:black" x1="0" y1="2" y2="10" antialias="false" length2="1.5" end2="none" end1="none"/>
+                                        <line length1="1.5" x2="5" style="line-style:normal;line-weight:normal;filling:none;color:black" x1="-5" y1="2" y2="2" antialias="false" length2="1.5" end2="none" end1="none"/>
+                                        <line length1="1.5" x2="5" style="line-style:normal;line-weight:normal;filling:none;color:black" x1="-5" y1="-2" y2="-2" antialias="false" length2="1.5" end2="none" end1="none"/>
+                                        <terminal x="0" y="-10" orientation="n" uuid="{ee18bef2-5dcb-40c8-8ecc-d709a4456093}" name="A1" type="Generic"/>
+                                        <terminal x="0" y="10" orientation="s" uuid="{cca3b3c1-90c2-4fd8-9f40-7474f4778403}" name="A2" type="Generic"/>
+                                    </description>
+                                </definition>
+                            </element>
+                        </category>
+                    </category>
+                </category>
+                <category name="91_en_60617">
+                    <names>
+                        <name lang="fr">EN 60617</name>
+                        <name lang="en">IEC 60617</name>
+                        <name lang="ja">電気用図記号 (JIS C 0617 / IEC 60617)</name>
+                        <name lang="es">IEC 60617</name>
+                        <name lang="da">DS/IEC 60617</name>
+                        <name lang="de">DIN EN 60617</name>
+                        <name lang="cs">EN 60617</name>
+                    </names>
+                    <category name="en_60617_02">
+                        <names>
+                            <name lang="fr">02- Éléments de symboles, symboles distinctifs et autres symboles d'application générale</name>
+                            <name lang="en">02- Symbol elements, qualifying symbols and other symbols having general application</name>
+                            <name lang="ja">02- 図記号要素，限定図記号及びその他の一般用途図記号</name>
+                            <name lang="es">02- Elementos e identificadores de símbolos</name>
+                            <name lang="da">02- Symbolelementer, tillægssymboler og andre symboler, som har almindelig anvendelse</name>
+                            <name lang="de">02- Symbolelemente, Kennzeichen und andere Schaltzeichen für allgemeine Anwendungen</name>
+                            <name lang="cs">02- Prvky značek, doplňkové značky a ostatní značky pro všeobecné použití</name>
+                        </names>
+                        <category name="en_60617_02_15">
+                            <names>
+                                <name lang="fr">15- Mise à la terre et à la masse, équipotentialité</name>
+                                <name lang="en">15- Earth, frame or ground connections</name>
+                                <name lang="ja">15- 接地及びフレーム接続又は等電位</name>
+                                <name lang="es">15- Conexiones a Tierra y chasis</name>
+                                <name lang="de">15- Erde, Masse, Äquipotential</name>
+                                <name lang="cs">15- Uzemnění a spojení s kostrou, ekvipotencialita</name>
+                            </names>
+                            <element name="en_60617_02_15_01.elmt">
+                                <definition hotspot_x="15" hotspot_y="21" height="40" width="30" version="0.70" type="element" link_type="simple">
+                                    <uuid uuid="{05398aed-e651-4aa6-a8b7-7f2d2bc3e955}"/>
+                                    <names>
+                                        <name lang="fr">Terre, symbole général</name>
+                                        <name lang="es">Tierra ó neutro, simbolo general</name>
+                                        <name lang="de">Erde</name>
+                                        <name lang="en">Earth or ground, general symbol</name>
+                                        <name lang="cs">Uzemnění, všeobecná značka</name>
+                                    </names>
+                                    <informations>Author: The QElectroTech team
+License: see http://qelectrotech.org/wiki/doc/elements_license</informations>
+                                    <description>
+                                        <input rotate="true" text="_" x="35" size="9" y="25" tagg="label"/>
+                                        <line x2="10" length1="1.5" style="line-style:normal;line-weight:normal;filling:none;color:black" x1="-10" y2="0" y1="0" antialias="false" length2="1.5" end2="none" end1="none"/>
+                                        <line x2="0" length1="1.5" style="line-style:normal;line-weight:normal;filling:none;color:black" x1="0" y2="0" y1="-15" antialias="false" length2="1.5" end2="none" end1="none"/>
+                                        <line x2="7" length1="1.5" style="line-style:normal;line-weight:normal;filling:none;color:black" x1="-7" y2="5" y1="5" antialias="false" length2="1.5" end2="none" end1="none"/>
+                                        <line x2="4" length1="1.5" style="line-style:normal;line-weight:normal;filling:none;color:black" x1="-4" y2="10" y1="10" antialias="false" length2="1.5" end2="none" end1="none"/>
+                                        <line x2="-0.5" length1="1.5" style="line-style:normal;line-weight:normal;filling:none;color:black" x1="0.5" y2="15" y1="15" antialias="false" length2="1.5" end2="none" end1="none"/>
+                                        <terminal x="0" y="-15" orientation="n"/>
+                                    </description>
+                                </definition>
+                            </element>
+                        </category>
+                        <category name="en_60617_02_02">
+                            <names>
+                                <name lang="fr">02- Nature du courant et de la tension</name>
+                                <name lang="en">02- Kind of current and voltage</name>
+                                <name lang="ja">02- 電圧及び電流の種類</name>
+                                <name lang="es">02- Naturaleza de la corriente y el voltaje</name>
+                                <name lang="de">02- Arten von Strömen und Spannungen</name>
+                                <name lang="cs">02- Druhy proudu a napětí</name>
+                            </names>
+                            <element name="en_60617_02_02_14.elmt">
+                                <definition hotspot_x="10" hotspot_y="5" height="10" width="20" version="0.70" type="element" link_type="simple">
+                                    <uuid uuid="{ad9f6a8e-0473-484e-a8a9-ca2ce4b45c67}"/>
+                                    <names>
+                                        <name lang="fr">Polarité négative</name>
+                                        <name lang="de">negative Polarität</name>
+                                        <name lang="es">Polaridad negativa</name>
+                                        <name lang="cs">Záporná polarita</name>
+                                        <name lang="en">Negative polarity</name>
+                                    </names>
+                                    <informations>Author: The QElectroTech team
+License: see http://qelectrotech.org/wiki/doc/elements_license</informations>
+                                    <description>
+                                        <input rotate="true" text="_" x="5" size="9" y="15" tagg="label"/>
+                                        <line x2="4" length1="1.5" style="line-style:normal;line-weight:normal;filling:none;color:black" x1="-4" y2="0" y1="0" antialias="false" length2="1.5" end2="none" end1="none"/>
+                                    </description>
+                                </definition>
+                            </element>
+                            <element name="en_60617_02_02_13.elmt">
+                                <definition hotspot_x="10" hotspot_y="10" height="20" width="20" version="0.70" type="element" link_type="simple">
+                                    <uuid uuid="{2bf26a1e-3506-4415-bd0a-f0bd2e3da24b}"/>
+                                    <names>
+                                        <name lang="fr">Polarité positive</name>
+                                        <name lang="de">positive Polarität</name>
+                                        <name lang="es">Polaridad positiva</name>
+                                        <name lang="cs">Kladná polarita</name>
+                                        <name lang="en">Positive polarity</name>
+                                    </names>
+                                    <informations>Author: The QElectroTech team
+License: see http://qelectrotech.org/wiki/doc/elements_license</informations>
+                                    <description>
+                                        <line x2="0" length1="1.5" style="line-style:normal;line-weight:normal;filling:none;color:black" x1="0" y2="4" y1="-4" antialias="false" length2="1.5" end2="none" end1="none"/>
+                                        <input rotate="true" text="_" x="5" size="9" y="15" tagg="label"/>
+                                        <line x2="4" length1="1.5" style="line-style:normal;line-weight:normal;filling:none;color:black" x1="-4" y2="0" y1="0" antialias="false" length2="1.5" end2="none" end1="none"/>
+                                    </description>
+                                </definition>
+                            </element>
+                        </category>
+                    </category>
+                </category>
+            </category>
+        </category>
+    </collection>
+</project>

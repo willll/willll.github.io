@@ -50,12 +50,12 @@ Locate and cut the PCB trace connected to pin 3 of the RJ11 port.
 ![Trace to Cut](./assets/img/ssmodem/PXL_20240119_131417114.MP.png)
 <p style="text-align:center"><i>Trace to Cut</i></p>
 
-Use a knive to cut the trace, it should look like this once cut:
+Use a knife to carefully cut the trace. It should look like this once cut:
 
 ![Trace Cut](./assets/img/ssmodem/2020_0101_010321_005.jpg)
 <p style="text-align:center"><i>Trace Cut</i></p>
 
-Use a multimeter to verify that there is no continuity across the cut trace.
+**⚠️ IMPORTANT**: Use a multimeter to verify that there is **no continuity** across the cut trace before continuing.
 
 **Reference**: [GeeksforGeeks – RJ11 Color Code](https://www.geeksforgeeks.org/rj11-color-code/)
 
@@ -64,7 +64,7 @@ Use a multimeter to verify that there is no continuity across the cut trace.
 ![JST Wires](./assets/img/ssmodem/PXL_20250426_221529153.MP.jpg)
 <p style="text-align:center"><i>JST Wires</i></p>
 
-First, solder one JST connector to the USB power input:
+First, solder one JST connector to the USB 5V power input:
 
 ![USB Power](./assets/img/ssmodem/2020_0102_005120_005.jpg)
 <p style="text-align:center"><i>USB Power</i></p>
@@ -76,28 +76,38 @@ Then solder another connector near the previously cut trace to inject the 9V:
 
 ### Curing
 
-To avoid short circuits, it's a good idea to coat exposed traces with acrylic or silicone.
+To avoid short circuits, coat exposed traces with acrylic or silicone.
 
-![Coating exemple with silicone under UV light](./assets/img/ssmodem/2020_0102_020225_005.jpg)
-<p style="text-align:center"><i>Coating exemple with silicone under UV light</i></p>
+![Coating example with silicone under UV light](./assets/img/ssmodem/2020_0102_020225_005.jpg)
+<p style="text-align:center"><i>Coating example with silicone under UV light</i></p>
 
-## Modify the Step-up Converter
+## Modify the Step-Up Converter
 
-### Configure the Board
+### Configure the Step-Up Converter
 
-Set the board to output 9V:
+Adjust the potentiometer on the step-up converter to output **9V**.  
+Use a multimeter to confirm the correct output voltage before connecting to the modem.
 
 ![Board Configurations](./assets/img/ssmodem/2020_0101_013807_005.jpg)
-<p style="text-align:center"><i>Board Configurations</i></p>
+<p style="text-align:center"><i>Step-Up Converter Configuration</i></p>
 
-Apply the configuration:
+After adjusting, confirm:
 
 ![Board Configured](./assets/img/ssmodem/2020_0101_000424_005.jpg)
-<p style="text-align:center"><i>Board Configured</i></p>
+<p style="text-align:center"><i>Step-Up Converter Set to 9V</i></p>
 
-### Add JST Connector
+### Add JST Connector to Step-Up Converter
 
-Solder a JST connector to the output of the step-up converter.
+Solder a JST connector to the input of the step-up converter.
+
+![Board Configured](./assets/img/ssmodem/2020_0102_033201_004.jpg)
+<p style="text-align:center"><i>Step-Up Converter input wiring</i></p>
+
+![Wiring diagram](./assets/img/ssmodem/1_diagram.png)
+<p style="text-align:center"><i>Wiring diagram</i></p>
+
+![Board Configured](./assets/img/ssmodem/2020_0102_043141_004.jpg)
+<p style="text-align:center"><i>XXXX</i></p>
 
 
 ## Related Links
@@ -108,8 +118,9 @@ Solder a JST connector to the output of the step-up converter.
 - [Browsing the Web with Sega Saturn (2022 & Beyond) – Medium](https://jackrafter.medium.com/tutorial-on-browsing-the-web-with-sega-saturn-and-planetweb-browser-in-2022-and-beyond-79dbab82b198)
 - [Dreamcast-Talk: Netlink + DreamPi Discussion](https://dreamcast-talk.com/forum/viewtopic.php?t=8453)
 
-### To Be Done
+## Next Steps (To Be Done)
 
-- [Netlink GitHub Repository](https://github.com/eaudunord/Netlink/)
-
-
+- Document the connection between the step-up converter and modem.
+- Add a wiring diagram for clarity.
+- Integrate testing and troubleshooting guide.
+- Link to [Netlink GitHub Repository](https://github.com/eaudunord/Netlink/)
