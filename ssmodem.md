@@ -124,10 +124,52 @@ To be extra cautious, I choose the solder both negative pads together using the 
 
 ### Curing
 
-Again, coating may be good idea :
+Again, coating may be good idea (I used MG Chemicals 422C, which is fluorescent under UV-A light) :
 
-![Step-Up board coating](./assets/img/ssmodem/2020_0118_222437_008.jpg)
+![Step-Up board coating](./assets/img/ssmodem/PXL_20250628_174654179.jpg)
 <p style="text-align:center"><i>Step-Up board coating</i></p>
+
+## Validation
+
+At this point, all the parts are ready to be assemble all together :
+
+![Parts](./assets/img/ssmodem/PXL_20250628_190647493.jpg)
+<p style="text-align:center"><i>Parts</i></p>
+
+Connect the Step-Up converter to the modem using the JST connectors, once connected, it is time to test, one good first test is to inject 5V into the USB port to validate that the Step-Up board is powering up, then connect to a multimeter to read the drawn amps, during my tests I read 4.85V/0.07A.  
+
+![Validation](./assets/img/ssmodem/PXL_20250628_191111627.jpg)
+<p style="text-align:center"><i>Validation</i></p>
+
+Finally, connecting it to a Rasperry pi to check that all the 3 leds are lit and the modem is properly detected.
+
+> usb 1-1.4: new full-speed USB device number 3 using xhci_hcd
+> 
+> usb 1-1.4: New USB device found, idVendor=0572, idProduct=1324, bcdDevice= 1.00
+> 
+> usb 1-1.4: New USB device strings: Mfr=1, Product=2, SerialNumber=3
+> 
+> usb 1-1.4: Product: USB Modem
+> 
+> usb 1-1.4: Manufacturer: Conexant
+> 
+> usb 1-1.4: SerialNumber: 24680246
+> 
+> cdc_acm 1-1.4:1.0: ttyACM0: USB ACM device
+> 
+> usbcore: registered new interface driver cdc_acm
+> 
+> cdc_acm: USB Abstract Control Model driver for USB modems and ISDN adapters
+
+## Final Assembly
+
+![Folding all withing the case](./assets/img/ssmodem/PXL_20250628_194322102.jpg)
+<p style="text-align:center"><i>Folding all withing the case</i></p>
+
+## Result
+
+![Result](./assets/img/ssmodem/PXL_20250628_194648052.MP.jpg)
+<p style="text-align:center"><i>Result</i></p>
 
 ## Related Links
 
@@ -136,10 +178,3 @@ Again, coating may be good idea :
 - [Dreamcast-Talk Forum Discussion](https://www.dreamcast-talk.com/forum/viewtopic.php?t=12731)
 - [Browsing the Web with Sega Saturn (2022 & Beyond) – Medium](https://jackrafter.medium.com/tutorial-on-browsing-the-web-with-sega-saturn-and-planetweb-browser-in-2022-and-beyond-79dbab82b198)
 - [Dreamcast-Talk: Netlink + DreamPi Discussion](https://dreamcast-talk.com/forum/viewtopic.php?t=8453)
-
-## Next Steps (To Be Done)
-
-- Document the connection between the step-up converter and modem.
-- Add a wiring diagram for clarity.
-- Integrate testing and troubleshooting guide.
-- Link to [Netlink GitHub Repository](https://github.com/eaudunord/Netlink/)
