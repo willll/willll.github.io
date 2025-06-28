@@ -1,8 +1,7 @@
-
 ---
 layout: default
 title: "SEGA SATURN Modem PART 1"
-permalink: /ssmodem
+permalink: /ssmodem_part1
 ---
 
 # SEGA SATURN Modem PART 1
