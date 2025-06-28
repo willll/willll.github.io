@@ -106,9 +106,28 @@ Solder a JST connector to the input of the step-up converter.
 ![Wiring diagram](./assets/img/ssmodem/1_diagram.png)
 <p style="text-align:center"><i>Wiring diagram</i></p>
 
-![Board Configured](./assets/img/ssmodem/2020_0102_043141_004.jpg)
-<p style="text-align:center"><i>XXXX</i></p>
+Bend the capacitor and the resistor over the board, then twist the capaictor's negative sleg with the free resistor's leg. 
+**⚠️ IMPORTANT**: what carefuly about the capacitor polarity ! 
 
+![Capacitor and resistor assembly](./assets/img/ssmodem/2020_0102_043141_004.jpg)
+<p style="text-align:center"><i>Capacitor and resistor assembly</i></p>
+
+Use a heatshrink to cover the twisted legs, and solder the JST cable to both the Step-Up's positive pad, and the twited legs : 
+
+![Board Configured](./assets/img/ssmodem/2020_0118_222140_007.jpg)
+<p style="text-align:center"><i>Step-Up JST cable assembly</i></p>
+
+To be extra cautious, I choose the solder both negative pads together using the resistor's leg, I am not sure if this is useful.
+
+![Step-Up grounding](./assets/img/ssmodem/2020_0118_222437_008.jpg)
+<p style="text-align:center"><i>Step-Up grounding</i></p>
+
+### Curing
+
+Again, coating may be good idea :
+
+![Step-Up board coating](./assets/img/ssmodem/2020_0118_222437_008.jpg)
+<p style="text-align:center"><i>Step-Up board coating</i></p>
 
 ## Related Links
 
