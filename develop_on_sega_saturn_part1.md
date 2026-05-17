@@ -75,22 +75,37 @@ If these commands work, you are ready.
 
 ### Windows
 
-1. Install Docker Desktop.
-2. Open Docker Desktop once and wait until it says Docker is running.
-3. Open PowerShell (or WSL), then clone the project:
+Use one of these free alternatives:
+
+- [Rancher Desktop](https://rancherdesktop.io/) (recommended for beginners)
+- [Podman Desktop](https://podman-desktop.io/)
+- WSL2 + Docker Engine inside your Linux distribution
+
+Recommended setup (Rancher Desktop):
+
+1. Install Rancher Desktop.
+2. In settings, enable the Docker-compatible CLI so `docker` commands work.
+3. Open PowerShell or WSL and verify:
+
+```bash
+docker --version
+docker info
+```
+
+4. Clone the project:
 
 ```bash
 git clone https://github.com/willll/saturn-docker.git
 cd saturn-docker
 ```
 
-4. Build the image (first time can take a while):
+5. Build the image (first time can take a while):
 
 ```bash
 docker build -t saturn-docker . --file ./Dockerfile
 ```
 
-5. Start the container shell:
+6. Start the container shell:
 
 ```bash
 docker run -it --rm -v $(pwd):/saturn saturn-docker /bin/bash
@@ -100,9 +115,34 @@ If `$(pwd)` does not work in PowerShell, run the same commands in WSL.
 
 ### macOS
 
-1. Install Docker Desktop for Mac.
-2. Start Docker Desktop and wait until it is fully initialized.
-3. Open Terminal, then run:
+Use one of these free alternatives:
+
+- [Colima](https://github.com/abiosoft/colima) + Docker CLI (recommended)
+- [Rancher Desktop](https://rancherdesktop.io/)
+- [Podman Desktop](https://podman-desktop.io/)
+
+Recommended setup (Colima):
+
+1. Install tools:
+
+```bash
+brew install docker colima
+```
+
+2. Start Colima:
+
+```bash
+colima start
+```
+
+3. Verify Docker-compatible CLI works:
+
+```bash
+docker --version
+docker info
+```
+
+4. Open Terminal, then run:
 
 ```bash
 git clone https://github.com/willll/saturn-docker.git
@@ -142,10 +182,11 @@ If that works, your Saturn development environment is installed correctly.
 
 ### Common Beginner Issues
 
-- Docker is installed but not running: start Docker Desktop and retry.
+- Docker-compatible runtime is installed but not running: start Rancher Desktop/Podman/your container service and retry.
 - Permission errors on Linux: add your user to the docker group, then log out and back in.
 - Slow first build: normal, because toolchains and dependencies are downloaded.
 - Volume/path issues on Windows: prefer WSL if PowerShell path mapping causes trouble.
+- Volume/path issues on macOS: retry from a local folder (for example under your home directory) and confirm Colima/Rancher is running before `docker run`.
 
 ### Typical Questions (saturn-docker README)
 
@@ -181,7 +222,7 @@ Main components and their purpose:
 - **schily-tools**: ISO/image authoring utilities used in disc build workflows. Project: [schilytools](https://github.com/clausecker/schilytools)
 - **IP.BIN generation tool**: creates Saturn boot metadata. Project: [Saturn-SDK-Tool-IPMaker](https://github.com/willll/Saturn-SDK-Tool-IPMaker)
 - **satconv (satcon)**: image conversion utility for Saturn asset pipelines. Project: [satconv](https://git.sr.ht/~ndiddy/satconv/)
-- **ftx**: texture/asset conversion utility used by Saturn projects. Project: [ftx](https://github.com/willll/ftx)
+- **ftx**: Sega Saturn USB flash cart transfer utility (upload/download/execute/debug console). Project: [ftx](https://github.com/willll/ftx)
 - **SGL support**: Sega Graphics Library integration for legacy SDK-style projects.
 - **SBL support**: Sega Basic Library integration. Reference project: [shicky256/sbl](https://github.com/shicky256/sbl)
 - **Jo Engine**: beginner-friendly Saturn game framework. Project: [jo-engine.org](https://www.jo-engine.org/)
