@@ -23,6 +23,8 @@ In this workflow, logs are read on the host with `ftx`:
 
 - [willll/ftx](https://github.com/willll/ftx)
 
+Note: the setup steps in this page are Linux-focused.
+
 ## How USB Gamer's Cartridge Logging Works
 
 1. Saturn code writes trace bytes to the debug output address.
@@ -32,6 +34,20 @@ In this workflow, logs are read on the host with `ftx`:
 This is useful for hardware validation when emulator behavior differs from real console behavior.
 
 ## Install and Use ftx
+
+Prerequisites (Linux):
+
+- C++ compiler (`g++`)
+- `cmake`
+- Boost development packages
+- `libftdi1` development package
+
+Example install command (Debian/Ubuntu):
+
+```bash
+sudo apt update
+sudo apt install -y build-essential cmake libboost-program-options-dev libboost-filesystem-dev libftdi1-dev
+```
 
 Build `ftx` from source:
 
@@ -44,7 +60,7 @@ cmake ..
 make
 ```
 
-Start debug console mode:
+Start debug console mode from the build folder:
 
 ```bash
 ./ftx -c
@@ -62,6 +78,14 @@ If needed, specify USB VID/PID explicitly:
 2. Start `ftx` debug console mode on host (`./ftx -c`).
 3. Boot your Saturn program.
 4. Watch trace lines appear in real time in the terminal.
+
+Expected success example:
+
+```text
+[BOOT] mandelbrot start
+[INIT] slInitSystem done
+[LOOP] frame done
+```
 
 ## Use with saturn_mandelbrot
 
@@ -81,3 +105,10 @@ Typical trace flow:
 - No output in `ftx`: verify cartridge cable/connection and confirm program is emitting trace messages.
 - Garbled output: check cartridge USB connection stability and retry with explicit VID/PID.
 - Intermittent logs: reduce trace volume in tight loops and keep messages short.
+- Permission denied / device access error on Linux: check user USB permissions (udev/group), or test once with elevated privileges to confirm it is a permissions issue.
+
+Quick Linux device check:
+
+```bash
+lsusb | grep -i "0403:6001"
+```
