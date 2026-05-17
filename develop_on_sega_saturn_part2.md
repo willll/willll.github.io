@@ -8,20 +8,19 @@ permalink: /develop_on_sega_saturn_part2
 
 ## Table of Contents
 
-- [Develop on Sega Saturn Part 2](#develop-on-sega-saturn-part-2)
-  - [Table of Contents](#table-of-contents)
-  - [Overview](#overview)
-  - [What Is a Debug Trace?](#what-is-a-debug-trace)
-  - [How to Retrieve Traces](#how-to-retrieve-traces)
-    - [Kronos](#kronos)
-    - [Mednafen](#mednafen)
-  - [Example Project: saturn\_mandelbrot](#example-project-saturn_mandelbrot)
-    - [Where Debug Output Is Implemented](#where-debug-output-is-implemented)
-    - [Add Trace Calls in the Program](#add-trace-calls-in-the-program)
-    - [Build with saturn-docker](#build-with-saturn-docker)
-    - [Run It](#run-it)
-    - [Retrieve Traces with Emulators](#retrieve-traces-with-emulators)
-  - [Next Steps](#next-steps)
+- [Overview](#overview)
+- [What Is a Debug Trace?](#what-is-a-debug-trace)
+- [How to Retrieve Traces](#how-to-retrieve-traces)
+  - [Kronos](#kronos)
+  - [Mednafen](#mednafen)
+- [Example Project: saturn_mandelbrot](#example-project-saturn_mandelbrot)
+  - [Where Debug Output Is Implemented](#where-debug-output-is-implemented)
+  - [Add Trace Calls in the Program](#add-trace-calls-in-the-program)
+  - [Build with saturn-docker](#build-with-saturn-docker)
+  - [Run It](#run-it)
+  - [Expected Success Output](#expected-success-output)
+  - [Retrieve Traces with Emulators](#retrieve-traces-with-emulators)
+- [Next Steps](#next-steps)
 
 ## Overview
 
@@ -115,7 +114,7 @@ Implementation note:
 - In `mednafenSSDev`, debug cart handling is in `src/ss/cart/debug.cpp`.
 - The debug write handler prints characters with `fputc(..., stdout)` and flushes output.
 
-USB Gamer's Cartridge logging has been moved to Part 3:
+For real hardware USB cartridge logging, continue with Part 3:
 
 - [Develop on Sega Saturn Part 3](./develop_on_sega_saturn_part3)
 
@@ -192,13 +191,32 @@ cd saturn_mandelbrot
 Release build (ninja):
 
 ```bash
-docker run -it --rm -v $(pwd):/saturn saturn-docker /bin/sh -c "mkdir -p /saturn/build && cd /saturn/build && rm -rf * && cmake -DCMAKE_TOOLCHAIN_FILE=$SATURN_CMAKE/sega_saturn.cmake -DCMAKE_INSTALL_PREFIX=/saturn/ .. -G Ninja && ninja && ninja install"
+docker run -it --rm -v $(pwd):/saturn saturn-docker /bin/sh -c "
+  mkdir -p /saturn/build && \
+  cd /saturn/build && \
+  rm -rf * && \
+  cmake -DCMAKE_TOOLCHAIN_FILE=$SATURN_CMAKE/sega_saturn.cmake \
+        -DCMAKE_INSTALL_PREFIX=/saturn/ \
+        .. -G Ninja && \
+  ninja && \
+  ninja install
+"
 ```
 
 Debug build (ninja):
 
 ```bash
-docker run -it --rm -v $(pwd):/saturn saturn-docker /bin/sh -c "mkdir -p /saturn/build && cd /saturn/build && rm -rf * && cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_TOOLCHAIN_FILE=$SATURN_CMAKE/sega_saturn.cmake -DCMAKE_INSTALL_PREFIX=/saturn/ .. -G Ninja && ninja && ninja install"
+docker run -it --rm -v $(pwd):/saturn saturn-docker /bin/sh -c "
+  mkdir -p /saturn/build && \
+  cd /saturn/build && \
+  rm -rf * && \
+  cmake -DCMAKE_BUILD_TYPE=Debug \
+        -DCMAKE_TOOLCHAIN_FILE=$SATURN_CMAKE/sega_saturn.cmake \
+        -DCMAKE_INSTALL_PREFIX=/saturn/ \
+        .. -G Ninja && \
+  ninja && \
+  ninja install
+"
 ```
 
 Important artifacts:
@@ -221,6 +239,16 @@ Mednafen:
 
 ```bash
 mednafen ./mandelbrot/mandelbrot.cue
+```
+
+### Expected Success Output
+
+When trace output is correctly configured, you should see lines similar to:
+
+```text
+[BOOT] mandelbrot start
+[INIT] slInitSystem done
+[LOOP] frame done
 ```
 
 ### Retrieve Traces with Emulators
