@@ -8,32 +8,34 @@ permalink: /develop_on_sega_saturn_part1
 
 ## Table of Contents
 
-- [Overview](#overview)
-- [Install the Development Environment](#install-the-development-environment)
-	- [Before You Start](#before-you-start)
-	- [Windows](#windows)
-	- [macOS](#macos)
-	- [Linux](#linux)
-	- [First Successful Run Checklist](#first-successful-run-checklist)
-	- [Common Beginner Issues](#common-beginner-issues)
-	- [Typical Questions (saturn-docker README)](#typical-questions-saturn-docker-readme)
-	- [What This Brings](#what-this-brings)
-- [What saturn-docker Installs](#what-saturn-docker-installs)
-- [Use Visual Studio Code for Saturn Development](#use-visual-studio-code-for-saturn-development)
-	- [Recommended Extensions](#recommended-extensions)
-	- [Workflow A (Easy): Build with Local Docker from VS Code Tasks](#workflow-a-easy-build-with-local-docker-from-vs-code-tasks)
-	- [Workflow B: SSH into Container/Remote Host](#workflow-b-ssh-into-containerremote-host)
-	- [Dev Containers Option](#dev-containers-option)
-	- [CMake and Build/Run Tasks](#cmake-and-buildrun-tasks)
-	- [Minimal Beginner Loop in VS Code](#minimal-beginner-loop-in-vs-code)
-- [Hello World](#hello-world)
-	- [Understand the Source Code](#understand-the-source-code)
-	- [Build It with the Docker Image](#build-it-with-the-docker-image)
-	- [Build Artifacts (What You Get)](#build-artifacts-what-you-get)
-	- [Run with Kronos](#run-with-kronos)
-	- [Run with Mednafen](#run-with-mednafen)
-	- [Quick Troubleshooting](#quick-troubleshooting)
-- [Next Steps](#next-steps)
+- [Develop on Sega Saturn Part 1](#develop-on-sega-saturn-part-1)
+  - [Table of Contents](#table-of-contents)
+  - [Overview](#overview)
+  - [Install the Development Environment](#install-the-development-environment)
+    - [Before You Start](#before-you-start)
+    - [Windows](#windows)
+    - [macOS](#macos)
+    - [Linux](#linux)
+    - [First Successful Run Checklist](#first-successful-run-checklist)
+    - [Common Beginner Issues](#common-beginner-issues)
+    - [Typical Questions (saturn-docker README)](#typical-questions-saturn-docker-readme)
+    - [What This Brings](#what-this-brings)
+  - [What saturn-docker Installs](#what-saturn-docker-installs)
+  - [Use Visual Studio Code for Saturn Development](#use-visual-studio-code-for-saturn-development)
+    - [Recommended Extensions](#recommended-extensions)
+    - [Workflow A (Easy): Build with Local Docker from VS Code Tasks](#workflow-a-easy-build-with-local-docker-from-vs-code-tasks)
+    - [Workflow B: SSH into Container/Remote Host](#workflow-b-ssh-into-containerremote-host)
+    - [Dev Containers Option](#dev-containers-option)
+    - [CMake and Build/Run Tasks](#cmake-and-buildrun-tasks)
+    - [Minimal Beginner Loop in VS Code](#minimal-beginner-loop-in-vs-code)
+  - [Hello World](#hello-world)
+    - [Understand the Source Code](#understand-the-source-code)
+    - [Build It with the Docker Image](#build-it-with-the-docker-image)
+    - [Build Artifacts (What You Get)](#build-artifacts-what-you-get)
+    - [Run with Kronos](#run-with-kronos)
+    - [Run with Mednafen](#run-with-mednafen)
+    - [Quick Troubleshooting](#quick-troubleshooting)
+  - [Next Steps](#next-steps)
 
 ## Overview
 
@@ -399,7 +401,6 @@ After build/install, the important outputs are:
 - `build/helloworld.map`: link map file useful for symbol/address analysis.
 
 Tip: if you need to map crash addresses back to source, use `addr2line` with `helloworld.elf`.
-
 ### Run with Kronos
 
 Use the generated cue file:
@@ -428,4 +429,4 @@ If you are using the custom Mednafen build from your setup, run that binary path
 
 ## Next Steps
 
-Part 2 will cover hardware-side debugging.
+Part 2 will cover debugging with logs.
