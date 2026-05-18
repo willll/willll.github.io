@@ -8,19 +8,21 @@ permalink: /develop_on_sega_saturn_part2
 
 ## Table of Contents
 
-- [Overview](#overview)
-- [What Is a Debug Trace?](#what-is-a-debug-trace)
-- [How to Retrieve Traces](#how-to-retrieve-traces)
-  - [Kronos](#kronos)
-  - [Mednafen](#mednafen)
-- [Example Project: saturn_mandelbrot](#example-project-saturn_mandelbrot)
-  - [Where Debug Output Is Implemented](#where-debug-output-is-implemented)
-  - [Add Trace Calls in the Program](#add-trace-calls-in-the-program)
-  - [Build with saturn-docker](#build-with-saturn-docker)
-  - [Run It](#run-it)
-  - [Expected Success Output](#expected-success-output)
-  - [Retrieve Traces with Emulators](#retrieve-traces-with-emulators)
-- [Next Steps](#next-steps)
+- [Develop on Sega Saturn Part 2](#develop-on-sega-saturn-part-2)
+  - [Table of Contents](#table-of-contents)
+  - [Overview](#overview)
+  - [What Is a Debug Trace?](#what-is-a-debug-trace)
+  - [How to Retrieve Traces](#how-to-retrieve-traces)
+    - [Kronos](#kronos)
+    - [Mednafen](#mednafen)
+  - [Example Project: saturn\_mandelbrot](#example-project-saturn_mandelbrot)
+    - [Where Debug Output Is Implemented](#where-debug-output-is-implemented)
+    - [Add Trace Calls in the Program](#add-trace-calls-in-the-program)
+    - [Build with saturn-docker](#build-with-saturn-docker)
+    - [Run It](#run-it)
+    - [Expected Success Output](#expected-success-output)
+    - [Retrieve Traces with Emulators](#retrieve-traces-with-emulators)
+  - [Next Steps](#next-steps)
 
 ## Overview
 

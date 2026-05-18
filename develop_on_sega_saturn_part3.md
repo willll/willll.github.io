@@ -8,12 +8,14 @@ permalink: /develop_on_sega_saturn_part3
 
 ## Table of Contents
 
-- [Overview](#overview)
-- [How USB Gamer's Cartridge Logging Works](#how-usb-gamers-cartridge-logging-works)
-- [Install and Use ftx](#install-and-use-ftx)
-- [Retrieve Logs from Saturn](#retrieve-logs-from-saturn)
-- [Use with saturn_mandelbrot](#use-with-saturn_mandelbrot)
-- [Troubleshooting](#troubleshooting)
+- [Develop on Sega Saturn Part 3](#develop-on-sega-saturn-part-3)
+  - [Table of Contents](#table-of-contents)
+  - [Overview](#overview)
+  - [How USB Gamer's Cartridge Logging Works](#how-usb-gamers-cartridge-logging-works)
+  - [Install and Use ftx](#install-and-use-ftx)
+  - [Retrieve Logs from Saturn](#retrieve-logs-from-saturn)
+  - [Use with saturn\_mandelbrot](#use-with-saturn_mandelbrot)
+  - [Troubleshooting](#troubleshooting)
 
 ## Overview
 
