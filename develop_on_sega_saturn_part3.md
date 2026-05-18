@@ -8,14 +8,12 @@ permalink: /develop_on_sega_saturn_part3
 
 ## Table of Contents
 
-- [Develop on Sega Saturn Part 3](#develop-on-sega-saturn-part-3)
-  - [Table of Contents](#table-of-contents)
-  - [Overview](#overview)
-  - [How USB Gamer's Cartridge Logging Works](#how-usb-gamers-cartridge-logging-works)
-  - [Install and Use ftx](#install-and-use-ftx)
-  - [Retrieve Logs from Saturn](#retrieve-logs-from-saturn)
-  - [Use with saturn\_mandelbrot](#use-with-saturn_mandelbrot)
-  - [Troubleshooting](#troubleshooting)
+- [Overview](#overview)
+- [How USB Gamer's Cartridge Logging Works](#how-usb-gamers-cartridge-logging-works)
+- [Install and Use ftx](#install-and-use-ftx)
+- [Retrieve Logs from Saturn](#retrieve-logs-from-saturn)
+- [Use with saturn_mandelbrot](#use-with-saturn_mandelbrot)
+- [Troubleshooting](#troubleshooting)
 
 ## Overview
 
@@ -81,12 +79,11 @@ If needed, specify USB VID/PID explicitly:
 3. Boot your Saturn program.
 4. Watch trace lines appear in real time in the terminal.
 
-Expected success example:
+Expected success example (v1.0 output):
 
 ```text
-[BOOT] mandelbrot start
-[INIT] slInitSystem done
-[LOOP] frame done
+trace: main start
+trace: video on, entering render loop
 ```
 
 ## Use with saturn_mandelbrot
@@ -95,19 +92,18 @@ Reference project:
 
 - [saturn_mandelbrot](https://github.com/willll/saturn_mandelbrot)
 
-Important: upstream `saturn_mandelbrot` does not print trace messages by default. Add `debug_print(...)` calls in the code (as shown in Part 2), then rebuild before testing on hardware.
+As of tag [v1.0](https://github.com/willll/saturn_mandelbrot/releases/tag/v1.0), `saturn_mandelbrot` ships with built-in trace output. No code changes are needed to see logs.
 
 Typical trace flow:
 
-1. Build `saturn_mandelbrot` (from Part 2 workflow).
+1. Build `saturn_mandelbrot` v1.0 (from Part 2 workflow).
 2. Run the program on real hardware.
 3. Start `ftx -c` on host.
-4. Confirm expected trace prefixes such as `[BOOT]`, `[INIT]`, and `[LOOP]`.
+4. Confirm expected lines such as `trace: main start` and `trace: video on, entering render loop` appear.
 
 ## Troubleshooting
 
-- No output in `ftx`: verify cartridge cable/connection and confirm program is emitting trace messages.
-- No output in `ftx`: verify cartridge cable/connection and confirm you are running a build that includes `debug_print(...)` trace calls.
+- No output in `ftx`: verify cartridge cable/connection and confirm you are running the v1.0 build (or a build with `debug_print(...)` calls).
 - Garbled output: check cartridge USB connection stability and retry with explicit VID/PID.
 - Intermittent logs: reduce trace volume in tight loops and keep messages short.
 - Permission denied / device access error on Linux: check user USB permissions (udev/group), or test once with elevated privileges to confirm it is a permissions issue.

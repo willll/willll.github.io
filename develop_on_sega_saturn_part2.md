@@ -69,6 +69,12 @@ How you use it:
 - Keep terminal/log output visible while the program runs.
 - Correlate trace lines with on-screen behavior.
 
+When trace output is working, the Kronos log panel should look like this:
+
+![Kronos log output showing trace messages]({{ '/assets/img/develop_on_sega_saturn_part2/kronos-logs-display.png' | relative_url }})
+
+This screenshot shows the emulator window running the Mandelbrot demo while the log panel receives trace messages such as `trace: main start` and `trace: video on, entering render loop`.
+
 Kronos settings reference (Cart/Memory tab):
 
 ![Kronos Cart/Memory settings with Development Extension]({{ '/assets/img/develop_on_sega_saturn_part2/kronos-cart-memory-development-extension-settings.png' | relative_url }})
@@ -128,7 +134,7 @@ Reference project:
 
 This project is a good trace example because it has a long-running render loop where progress/freeze visibility is valuable.
 
-Important: upstream `saturn_mandelbrot` does not emit debug trace lines by default. You must add `debug_print(...)` calls (as shown below) and rebuild.
+As of tag [v1.0](https://github.com/willll/saturn_mandelbrot/releases/tag/v1.0), `saturn_mandelbrot` ships with `debug_print(...)` calls built in. You can run the project as-is and see trace output immediately.
 
 ### Where Debug Output Is Implemented
 
@@ -154,41 +160,33 @@ What this means:
 - Traces are emitted byte-by-byte to address `0x24001000`.
 - Emulator/hardware trace receivers can hook that write path and expose it on host side.
 
-### Add Trace Calls in the Program
+### Trace Calls in the Program
 
-`src/mandelbrot.c` includes `debug.h`, so you can add trace calls directly in `main` and key loop points.
+As of v1.0, `src/mandelbrot.c` already contains `debug_print(...)` calls at key points. You do not need to add them manually.
 
-Example:
+Actual trace calls in v1.0:
 
 ```c
-int main(void)
-{
-  debug_print("[BOOT] mandelbrot start");
-
-  slInitSystem(TV_320x224, NULL, 1);
-  debug_print("[INIT] slInitSystem done");
-
-  ...
-
-  while (1) {
-    mandelbrot_slow();
-    debug_print("[LOOP] frame done");
-    slSynch();
-  }
-}
+debug_print("trace: main start");
+// ... init ...
+debug_print("trace: slInitBitMap failed");  // error path only
+// ...
+debug_print("trace: video on, entering render loop");
 ```
+
+You can still add your own calls in `main` or loop bodies for deeper visibility. `src/mandelbrot.c` includes `debug.h`, so `debug_print(...)` is always available.
 
 Tip:
 
 - Keep trace lines short.
-- Prefix with tags like `[BOOT]`, `[INIT]`, `[LOOP]`, `[ERR]` to grep quickly.
+- Use consistent prefixes to grep quickly.
 
 ### Build with saturn-docker
 
-Clone and build:
+Clone and build (tag v1.0):
 
 ```bash
-git clone https://github.com/willll/saturn_mandelbrot.git
+git clone --branch v1.0 https://github.com/willll/saturn_mandelbrot.git
 cd saturn_mandelbrot
 ```
 
@@ -247,12 +245,17 @@ mednafen ./mandelbrot/mandelbrot.cue
 
 ### Expected Success Output
 
-After adding `debug_print(...)` calls and rebuilding, you should see lines similar to:
+When running the v1.0 build with traces enabled, you should see:
 
 ```text
-[BOOT] mandelbrot start
-[INIT] slInitSystem done
-[LOOP] frame done
+trace: main start
+trace: video on, entering render loop
+```
+
+If `slInitBitMap` fails (error path), you will also see:
+
+```text
+trace: slInitBitMap failed
 ```
 
 ### Retrieve Traces with Emulators
@@ -261,8 +264,7 @@ Kronos path:
 
 1. Run the image in Kronos.
 2. Keep host terminal/log output visible.
-3. Verify lines such as `[BOOT]`, `[INIT]`, `[LOOP]` appear.
-4. If no lines appear, confirm you are running a build that includes your `debug_print(...)` additions.
+3. Verify lines such as `trace: main start` and `trace: video on, entering render loop` appear.
 
 Mednafen path:
 
@@ -270,7 +272,7 @@ Mednafen path:
 2. Set `ss.cart debug` in `mednafen.cfg`.
 3. Run the image with Mednafen.
 4. Read trace lines from terminal standard output (and ImGui logs panel if enabled in your build).
-5. Compare trace order with expected program flow.
+5. Verify `trace: main start` and `trace: video on, entering render loop` appear in order.
 
 ## Next Steps
 
