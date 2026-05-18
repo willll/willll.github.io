@@ -93,6 +93,8 @@ Reference project:
 
 - [saturn_mandelbrot](https://github.com/willll/saturn_mandelbrot)
 
+Important: upstream `saturn_mandelbrot` does not print trace messages by default. Add `debug_print(...)` calls in the code (as shown in Part 2), then rebuild before testing on hardware.
+
 Typical trace flow:
 
 1. Build `saturn_mandelbrot` (from Part 2 workflow).
@@ -103,6 +105,7 @@ Typical trace flow:
 ## Troubleshooting
 
 - No output in `ftx`: verify cartridge cable/connection and confirm program is emitting trace messages.
+- No output in `ftx`: verify cartridge cable/connection and confirm you are running a build that includes `debug_print(...)` trace calls.
 - Garbled output: check cartridge USB connection stability and retry with explicit VID/PID.
 - Intermittent logs: reduce trace volume in tight loops and keep messages short.
 - Permission denied / device access error on Linux: check user USB permissions (udev/group), or test once with elevated privileges to confirm it is a permissions issue.

@@ -126,6 +126,8 @@ Reference project:
 
 This project is a good trace example because it has a long-running render loop where progress/freeze visibility is valuable.
 
+Important: upstream `saturn_mandelbrot` does not emit debug trace lines by default. You must add `debug_print(...)` calls (as shown below) and rebuild.
+
 ### Where Debug Output Is Implemented
 
 In `src/debug.h`, the project defines `debug_print`:
@@ -243,7 +245,7 @@ mednafen ./mandelbrot/mandelbrot.cue
 
 ### Expected Success Output
 
-When trace output is correctly configured, you should see lines similar to:
+After adding `debug_print(...)` calls and rebuilding, you should see lines similar to:
 
 ```text
 [BOOT] mandelbrot start
@@ -258,6 +260,7 @@ Kronos path:
 1. Run the image in Kronos.
 2. Keep host terminal/log output visible.
 3. Verify lines such as `[BOOT]`, `[INIT]`, `[LOOP]` appear.
+4. If no lines appear, confirm you are running a build that includes your `debug_print(...)` additions.
 
 Mednafen path:
 
