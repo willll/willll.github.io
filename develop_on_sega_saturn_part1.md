@@ -77,7 +77,7 @@ If these commands work, you are ready.
 ### Windows
 
 <details markdown="1">
-<summary>View Windows Instructions</summary>
+<summary style="cursor: pointer;"><strong>👉 Click here to expand Windows instructions</strong></summary>
 
 Use one of these free alternatives:
 
@@ -119,11 +119,12 @@ docker run -it --rm -v $(pwd):/saturn saturn-docker /bin/bash
 If `$(pwd)` does not work in PowerShell, run the same commands in WSL.
 
 </details>
+<br/>
 
 ### macOS
 
 <details markdown="1">
-<summary>View macOS Instructions</summary>
+<summary style="cursor: pointer;"><strong>👉 Click here to expand macOS instructions</strong></summary>
 
 Use one of these free alternatives:
 
@@ -165,11 +166,12 @@ docker run -it --rm -v $(pwd):/saturn saturn-docker /bin/bash
 The environment is the same as Windows and Linux because everything runs inside the container.
 
 </details>
+<br/>
 
 ### Linux
 
 <details markdown="1">
-<summary>View Linux Instructions</summary>
+<summary style="cursor: pointer;"><strong>👉 Click here to expand Linux instructions</strong></summary>
 
 1. Install Docker Engine (or Docker Desktop).
 2. Ensure your user can run Docker commands.
@@ -185,6 +187,8 @@ docker run -it --rm -v $(pwd):/saturn saturn-docker /bin/bash
 Linux is usually the simplest path because Docker integration is native.
 
 </details>
+
+<br/>
 
 ### First Successful Run Checklist
 
