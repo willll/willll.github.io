@@ -1,0 +1,8 @@
+sequenceDiagram
+    participant Saturn as Saturn Program
+    participant Cart as USB Gamer's Cartridge
+    participant Host as Host PC (ftx)
+
+    Saturn->>Cart: Write trace bytes (CS1 Address)
+    Cart->>Host: Forward over USB (FTDI)
+    Host-->>Host: ftx prints to Terminal
