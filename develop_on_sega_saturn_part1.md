@@ -69,6 +69,7 @@ Quick checks:
 git --version
 docker --version
 docker info
+docker run hello-world
 ```
 
 If these commands work, you are ready.
@@ -90,6 +91,7 @@ Recommended setup (Rancher Desktop):
 ```bash
 docker --version
 docker info
+docker run hello-world
 ```
 
 4. Clone the project:
@@ -140,6 +142,7 @@ colima start
 ```bash
 docker --version
 docker info
+docker run hello-world
 ```
 
 4. Open Terminal, then run:
@@ -442,6 +445,7 @@ After build/install, the important outputs are:
 - `build/helloworld.map`: link map file useful for symbol/address analysis.
 
 Tip: if you need to map crash addresses back to source, use `addr2line` with `helloworld.elf`.
+
 ### Run with Kronos
 
 Use the generated cue file:
