@@ -200,7 +200,17 @@ sh-elf-gcc --version
 ls -la /opt/saturn
 ```
 
-The output of `ls -la /opt/saturn` should reveal key folders such as `sgl`, `sbl`, `joengine`, `yaul`, `SaturnRingLib`, and the `toolchain` itself.
+The output of `ls -la /opt/saturn` should reveal key folders looking similar to this:
+
+```console
+drwxrwxrwx 1 ubuntu ubuntu 4096 Jun 30 12:00 SaturnRingLib
+drwxrwxrwx 1 ubuntu ubuntu 4096 Jun 30 12:00 joengine
+drwxrwxrwx 1 ubuntu ubuntu 4096 Jun 30 12:00 sbl
+drwxrwxrwx 1 ubuntu ubuntu 4096 Jun 30 12:00 sgl
+drwxrwxrwx 1 ubuntu ubuntu 4096 Jun 30 12:00 toolchain
+drwxrwxrwx 1 ubuntu ubuntu 4096 Jun 30 12:00 yaul
+...
+```
 
 If that works, your Saturn development environment is installed correctly.
 
@@ -277,7 +287,7 @@ This is a practical VS Code workflow for beginners using saturn-docker.
 
 This is the simplest option if Docker runs on your local machine.
 
-1. Clone your project (for example `saturn_helloworld`) locally.
+1. Clone your project (for example `saturn_helloworld` at [https://github.com/willll/saturn_helloworld](https://github.com/willll/saturn_helloworld)) locally.
 2. Open the project folder in VS Code.
 3. Use tasks that call Docker directly (same style as `Compile Docker [RELEASE]` in the sample `.vscode/tasks.json`).
 4. Build from VS Code Terminal or Task Runner.
@@ -314,7 +324,7 @@ Important:
 
 ### CMake and Build/Run Tasks
 
-The saturn_helloworld repository includes example VS Code task definitions for:
+The `saturn_helloworld` repository ([https://github.com/willll/saturn_helloworld](https://github.com/willll/saturn_helloworld)) includes example VS Code task definitions for:
 
 - Compile (release/debug)
 - Clean
@@ -444,14 +454,28 @@ cd saturn_helloworld
 
 Run the build inside saturn-docker:
 
+> **Tip:** The `-v $(pwd):/saturn` part of the command maps your current local folder to `/saturn` inside the container. This means the compiler instantly sees the files you edit on your machine, with no manual copying required!
+
 ```bash
-docker run -it --rm -v $(pwd):/saturn saturn-docker /bin/sh -c "mkdir -p /saturn/build && cd /saturn/build && rm -rf * && cmake -DCMAKE_TOOLCHAIN_FILE=$SATURN_CMAKE/sega_saturn.cmake -DCMAKE_INSTALL_PREFIX=/saturn/ .. && make all && make install"
+docker run -it --rm -v $(pwd):/saturn saturn-docker /bin/sh -c "\
+  mkdir -p /saturn/build && \
+  cd /saturn/build && \
+  rm -rf * && \
+  cmake -DCMAKE_TOOLCHAIN_FILE=$SATURN_CMAKE/sega_saturn.cmake -DCMAKE_INSTALL_PREFIX=/saturn/ .. && \
+  make all && \
+  make install"
 ```
 
 Debug build variant:
 
 ```bash
-docker run -it --rm -v $(pwd):/saturn saturn-docker /bin/sh -c "mkdir -p /saturn/build && cd /saturn/build && rm -rf * && cmake -DCMAKE_TOOLCHAIN_FILE=$SATURN_CMAKE/sega_saturn.cmake -DCMAKE_INSTALL_PREFIX=/saturn/ -DCMAKE_BUILD_TYPE=Debug .. && make all && make install"
+docker run -it --rm -v $(pwd):/saturn saturn-docker /bin/sh -c "\
+  mkdir -p /saturn/build && \
+  cd /saturn/build && \
+  rm -rf * && \
+  cmake -DCMAKE_TOOLCHAIN_FILE=$SATURN_CMAKE/sega_saturn.cmake -DCMAKE_INSTALL_PREFIX=/saturn/ -DCMAKE_BUILD_TYPE=Debug .. && \
+  make all && \
+  make install"
 ```
 
 ### Build Artifacts (What You Get)
@@ -469,6 +493,8 @@ Tip: if you need to map crash addresses back to source, use `addr2line` with `he
 
 ### Run with Kronos
 
+*(If you don't have it, you can download Kronos from [its official GitHub repository](https://github.com/FCare/Kronos).)*
+
 Use the generated cue file:
 
 ```bash
@@ -478,6 +504,8 @@ kronos -a ./helloworld/helloworld.cue
 Expected result: black background and debug text including `Hello World !`.
 
 ### Run with Mednafen
+
+*(You can download Mednafen from the [official Mednafen website](https://mednafen.github.io/).)*
 
 Use your Mednafen binary and the same cue file:
 
@@ -495,4 +523,4 @@ If you are using the custom Mednafen build from your setup, run that binary path
 
 ## Next Steps
 
-Part 2 will cover debugging with logs.
+[Part 2](/develop_on_sega_saturn_part2) will cover debugging with logs.
