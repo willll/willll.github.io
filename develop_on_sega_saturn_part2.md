@@ -189,6 +189,8 @@ cd saturn_mandelbrot
 
 Release build (ninja):
 
+> **Tip:** Just like in Part 1, `-v $(pwd):/saturn` instantly maps your local project folder into the container, allowing the compiler to read and write your files without manual copying.
+
 ```bash
 docker run -it --rm -v $(pwd):/saturn saturn-docker /bin/sh -c "
   mkdir -p /saturn/build && \
