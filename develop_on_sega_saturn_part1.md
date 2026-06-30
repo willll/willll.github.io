@@ -173,13 +173,15 @@ Linux is usually the simplest path because Docker integration is native.
 
 ### First Successful Run Checklist
 
-Inside the container, verify that you reached a Linux shell prompt and can run basic commands:
+Inside the container, verify that you reached a Linux shell prompt and can run basic commands. For example, test that the SH2 compiler is installed and check the core SDK directories:
 
 ```bash
 whoami
-pwd
-ls
+sh-elf-gcc --version
+ls -la /opt/saturn
 ```
+
+The output of `ls -la /opt/saturn` should reveal key folders such as `sgl`, `sbl`, `joengine`, `yaul`, `SaturnRingLib`, and the `toolchain` itself.
 
 If that works, your Saturn development environment is installed correctly.
 
