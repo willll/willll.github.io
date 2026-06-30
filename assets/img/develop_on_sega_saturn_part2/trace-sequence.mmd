@@ -1,0 +1,8 @@
+sequenceDiagram
+    participant Saturn as Saturn Program
+    participant Emulator as Emulator / Hardware Cart
+    participant Host as Host Terminal
+
+    Saturn->>Emulator: Write trace bytes (CS1 Address)
+    Emulator->>Host: Capture and forward stream
+    Host-->>Host: Display log output

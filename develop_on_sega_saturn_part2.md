@@ -56,6 +56,8 @@ The main principle used in this workflow is:
 2. Emulator or hardware captures those bytes.
 3. You read them on the host side (console/log/serial terminal).
 
+![Sequence Diagram showing trace byte flow]({{ '/assets/img/develop_on_sega_saturn_part2/trace-sequence.svg' | relative_url }})
+
 ### Kronos
 
 How it works:
