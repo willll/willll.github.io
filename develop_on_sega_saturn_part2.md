@@ -81,24 +81,15 @@ Kronos settings reference (Cart/Memory tab):
 
 ![Kronos Cart/Memory settings with Development Extension]({{ '/assets/img/develop_on_sega_saturn_part2/kronos-cart-memory-development-extension-settings.png' | relative_url }})
 
-Meaning of each setting shown:
+Mandatory settings for trace work:
 
-- `Cartridge = Development Extension`: enables the development/debug cartridge mode used for trace-oriented workflows.
-- `Memory` path (for example `bkram.bin`): file used by Kronos to persist backup RAM data between runs.
-- `Mpeg ROM`: optional MPEG card ROM path; not required for standard debug trace workflows.
-- `Extend Internal backup memory to 8MB`: expands backup memory size; useful for storage-heavy scenarios but not required for basic trace capture.
-
-Recommended for trace work:
-
-- Keep `Cartridge` on `Development Extension`.
-- Keep a valid `bkram.bin` path configured.
-- Leave `Mpeg ROM` empty unless you specifically need MPEG card features.
+- Set `Cartridge` on `Development Extension`.
 
 ### Mednafen
 
 How it works:
 
-- Same trace write path from Saturn code.
+- It reuses the exact same trace write mechanism as Kronos.
 - This workflow requires the `mednafenSSDev` fork: [willll/mednafenSSDev](https://github.com/willll/mednafenSSDev).
 - With the debug cart enabled, writes to debug cart space are captured and forwarded to host output.
 
@@ -118,6 +109,10 @@ Where traces are written:
 
 - Standard output (terminal where Mednafen is launched).
 - ImGui logs panel in dev builds (the debug cart path adds messages to the log view).
+
+When trace output is working, the Mednafen ImGui log panel should look like this:
+
+![Mednafen log output showing trace messages]({{ '/assets/img/develop_on_sega_saturn_part2/mednafen-logs-display.png' | relative_url }})
 
 Implementation note:
 
