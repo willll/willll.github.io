@@ -76,6 +76,9 @@ If these commands work, you are ready.
 
 ### Windows
 
+<details>
+<summary>View Windows Instructions</summary>
+
 Use one of these free alternatives:
 
 - [Rancher Desktop](https://rancherdesktop.io/) (recommended for beginners)
@@ -115,7 +118,12 @@ docker run -it --rm -v $(pwd):/saturn saturn-docker /bin/bash
 
 If `$(pwd)` does not work in PowerShell, run the same commands in WSL.
 
+</details>
+
 ### macOS
+
+<details>
+<summary>View macOS Instructions</summary>
 
 Use one of these free alternatives:
 
@@ -156,7 +164,12 @@ docker run -it --rm -v $(pwd):/saturn saturn-docker /bin/bash
 
 The environment is the same as Windows and Linux because everything runs inside the container.
 
+</details>
+
 ### Linux
+
+<details>
+<summary>View Linux Instructions</summary>
 
 1. Install Docker Engine (or Docker Desktop).
 2. Ensure your user can run Docker commands.
@@ -170,6 +183,8 @@ docker run -it --rm -v $(pwd):/saturn saturn-docker /bin/bash
 ```
 
 Linux is usually the simplest path because Docker integration is native.
+
+</details>
 
 ### First Successful Run Checklist
 
