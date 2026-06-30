@@ -76,7 +76,7 @@ If these commands work, you are ready.
 
 ### Windows
 
-<details>
+<details markdown="1">
 <summary>View Windows Instructions</summary>
 
 Use one of these free alternatives:
@@ -122,7 +122,7 @@ If `$(pwd)` does not work in PowerShell, run the same commands in WSL.
 
 ### macOS
 
-<details>
+<details markdown="1">
 <summary>View macOS Instructions</summary>
 
 Use one of these free alternatives:
@@ -168,7 +168,7 @@ The environment is the same as Windows and Linux because everything runs inside 
 
 ### Linux
 
-<details>
+<details markdown="1">
 <summary>View Linux Instructions</summary>
 
 1. Install Docker Engine (or Docker Desktop).
