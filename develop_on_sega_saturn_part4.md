@@ -22,7 +22,7 @@ permalink: /develop_on_sega_saturn_part4
 
 ## Overview
 
-After setting up the toolchain ([Part 1](./develop_on_sega_saturn_part1)), configuring VS Code ([Part 2](./develop_on_sega_saturn_part2)), and testing debug traces in emulators ([Part 3](./develop_on_sega_saturn_part3)), this final part focuses on retrieving debug logs from a real Sega Saturn using a USB Gamer's Cartridge.
+After setting up the toolchain ([Part 1](./develop_on_sega_saturn_part1)), configuring VS Code ([Part 2](./develop_on_sega_saturn_part2)), and testing debug traces in emulators ([Part 3](./develop_on_sega_saturn_part3)), this final part focuses on retrieving debug logs from a real Sega Saturn using a [USB Gamer's Cartridge](https://ppcenter.webou.net/satcart/).
 
 In this workflow, logs are read on the host with `ftx`:
 
@@ -31,7 +31,7 @@ In this workflow, logs are read on the host with `ftx`:
 ## How USB Gamer's Cartridge Logging Works
 
 1. Saturn code writes trace bytes to the debug output address.
-2. USB Gamer's Cartridge forwards these bytes over USB.
+2. [USB Gamer's Cartridge](https://ppcenter.webou.net/satcart/) forwards these bytes over USB.
 3. `ftx` reads the incoming debug stream and prints it on your host terminal.
 
 ![Hardware Trace Sequence Diagram]({{ '/assets/img/develop_on_sega_saturn_part4/hardware-trace-sequence.svg' | relative_url }})
@@ -134,7 +134,7 @@ What these flags do:
 - `--device-cgroup-rule='c 188:* rmw'` & `'c 189:* rmw'`: Grants read/write/mknod permissions for USB serial and FTDI character devices (major `188` for `ttyUSB`, major `189` for USB bus nodes).
 - `--user $(id -u):$(id -g)`: Runs container processes as your host user account to preserve USB file permissions.
 
-Inside the container, `ftx` can talk directly to your USB Gamer's Cartridge.
+Inside the container, `ftx` can talk directly to your [USB Gamer's Cartridge](https://ppcenter.webou.net/satcart/).
 
 </details>
 
@@ -152,7 +152,7 @@ If needed, specify USB VID/PID explicitly using `--vid` and `--pid`:
 
 ## Retrieve Logs from Saturn
 
-1. Connect USB Gamer's Cartridge to the Sega Saturn and host computer.
+1. Connect [USB Gamer's Cartridge](https://ppcenter.webou.net/satcart/) to the Sega Saturn and host computer.
 2. Start `ftx` debug console mode on host (`./ftx -c`).
 3. Boot your Saturn program.
 4. Watch trace lines appear in real time in the terminal.
@@ -196,7 +196,7 @@ To build `SRL-Mandelbrot` and capture trace output over USB:
 
    > **Build Flags Note:** Compiling with `DEBUG=1` (or `compile.bat debug`) defines the `-DDEBUG` preprocessor flag, enabling trace output logging and compiling the final binaries into `BuildDrop/`.
 
-3. Boot on hardware via USB Gamer's Cartridge:
+3. Boot on hardware via [USB Gamer's Cartridge](https://ppcenter.webou.net/satcart/):
 
    Upload the compiled binary (`BuildDrop/mandelbrot.bin`) to RAM (`0x06004000`) and launch `ftx` debug console mode (`-c`):
 
@@ -235,6 +235,6 @@ lsusb | grep -i "0403:6001"
 
 Congratulations! You now have a complete, cross-platform Sega Saturn development environment. 
 
-By utilizing Docker, you've completely abstracted away the pain of setting up the C compiler toolchain. With CMake and Ninja, your builds are fast and reproducible. And by implementing the debug trace output, you can smoothly develop locally with Kronos or Mednafen, and seamlessly take your project to real hardware via the USB Gamer's Cartridge when it's time for real validation.
+By utilizing Docker, you've completely abstracted away the pain of setting up the C compiler toolchain. With CMake and Ninja, your builds are fast and reproducible. And by implementing the debug trace output, you can smoothly develop locally with Kronos or Mednafen, and seamlessly take your project to real hardware via the [USB Gamer's Cartridge](https://ppcenter.webou.net/satcart/) when it's time for real validation.
 
 Happy coding!
