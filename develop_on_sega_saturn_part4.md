@@ -30,9 +30,11 @@ In this workflow, logs are read on the host with `ftx`:
 
 ## How USB Gamer's Cartridge Logging Works
 
-1. Saturn code writes trace bytes to the debug output address.
-2. [USB Gamer's Cartridge](https://ppcenter.webou.net/satcart/) forwards these bytes over USB.
+1. Saturn code writes trace bytes to the Gamer's Cartridge USB FIFO data register (`0x22100001` in CS0 space) while checking status flags (`0x22200001`).
+2. [USB Gamer's Cartridge](https://ppcenter.webou.net/satcart/) forwards these bytes over USB via its FTDI interface.
 3. `ftx` reads the incoming debug stream and prints it on your host terminal.
+
+> **Hardware vs. Emulator Memory Mapping:** Real Gamer's Cartridge hardware maps its USB FIFO registers in CS0 space (`0x22100001` data, `0x22200001` flags). This differs from emulator-based debug cart logging (such as Mednafen or Kronos), which listens on CS1 space (`0x24001000`).
 
 ![Hardware Trace Sequence Diagram]({{ '/assets/img/develop_on_sega_saturn_part4/hardware-trace-sequence.svg' | relative_url }})
 
@@ -166,11 +168,7 @@ Reference projects:
 
 ### What Is SaturnRingLib (SRL)?
 
-[SaturnRingLib (SRL)](https://github.com/ReyeMe/SaturnRingLib) is an object-oriented C++ framework designed to simplify Sega Saturn development by providing high-level abstractions on top of SGL:
-
-- **Graphics & Bitmaps:** Simplifies VDP1 sprite/texture creation and palette management (`SRL::Bitmap::IBitmap`).
-- **Slave SH-2 Offloading:** Easily offloads heavy computational loops (such as Mandelbrot pixel calculation) to the secondary SH-2 CPU via `SRL::Slave::ExecuteOnSlave()`.
-- **Integrated Memory & Debugging:** Provides structured memory allocation helpers alongside built-in debug logging channels.
+[SaturnRingLib (SRL)](https://github.com/ReyeMe/SaturnRingLib) is an object-oriented C++ framework designed to simplify Sega Saturn development by providing high-level abstractions on top of SGL.
 
 ### Building SRL-Mandelbrot & Enabling Debug Traces
 
@@ -183,18 +181,24 @@ To build `SRL-Mandelbrot` and capture trace output over USB:
    cd SRL-Mandelbrot
    ```
 
-2. Build with Debug flags:
+2. Configure `makefile` and build with hardware trace flags:
+
+   In `SRL-Mandelbrot/makefile`, trace output behavior is controlled by two key variables:
+   - `SRL_LOG_LEVEL = TESTING`: Controls the maximum log level to display.
+   - `SRL_LOG_OUTPUT ?= EMULATOR`: Selects the target log output mechanism (`DEV_CART`, `EMULATOR`, or `NONE`).
+
+   To route log messages directly to the FTDI USB device on real hardware, `SRL_LOG_OUTPUT` must be set to `DEV_CART`. You can pass this flag when running `make`:
 
    - **Linux (`saturn-docker` / `make`):**
      ```bash
-     docker run --rm -i -v $(pwd):/saturn saturn-docker /bin/bash -c "cd /saturn && make DEBUG=1"
+     docker run --rm -i -v $(pwd):/saturn saturn-docker /bin/bash -c "cd /saturn && make SRL_LOG_OUTPUT=DEV_CART"
      ```
    - **Windows / Batch Helper:**
      ```cmd
-     compile.bat debug
+     compile.bat release SRL_LOG_OUTPUT=DEV_CART
      ```
 
-   > **Build Flags Note:** Compiling with `DEBUG=1` (or `compile.bat debug`) defines the `-DDEBUG` preprocessor flag, enabling trace output logging and compiling the final binaries into `BuildDrop/`.
+   > **Note:** Overwriting `SRL_LOG_OUTPUT=DEV_CART` compiles SaturnRingLib's debug output backend (`SRL::DevCart`) to target the real hardware Gamer's Cartridge USB FIFO registers in CS0 space (`0x22100001` data, `0x22200001` flags) rather than emulator CS1 space (`0x24001000`), allowing `ftx` to capture log streams directly from the FTDI chip.
 
 3. Boot on hardware via [USB Gamer's Cartridge](https://ppcenter.webou.net/satcart/):
 
