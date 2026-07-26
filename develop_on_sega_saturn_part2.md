@@ -20,7 +20,7 @@ permalink: /develop_on_sega_saturn_part2
   - [Emulator Launch Tasks](#emulator-launch-tasks)
 - [Complete `.vscode/tasks.json` Templates](#complete-vscodetasksjson-templates)
   - [Template for Workflow A (Local Host calling Docker)](#template-for-workflow-a-local-host-calling-docker)
-  - [Template for Workflows B & C (Direct Container Execution)](#template-for-workflows-b--c-direct-container-execution-attached-container--remote-ssh)
+  - [Template for Workflows B & C (Direct Container Execution)](#template-for-workflows-b--c-direct-container-execution)
 - [C/C++ IntelliSense Configuration](#cc-intellisense-configuration)
 - [Next Steps](#next-steps)
 
@@ -121,11 +121,19 @@ Use this if your build engine or test machine runs on a dedicated server or virt
    ```
 3. **Open `/saturn` in VS Code** and develop remotely.
 
-> **Important Note on Shared Drives:** When using Remote - SSH, VS Code connects directly inside the remote container environment. Code editing and builds take place inside the container. However, for local testing (launching Kronos or Mednafen on your local machine), a shared drive or mounted volume (such as `-v $(pwd):/saturn`, NFS, or SMB) is **necessary** so your local host can access the compiled build artifacts (`.iso`, `.cue`, `.elf`).
+#### Testing Locally with Shared Drives
+
+When using Remote - SSH, VS Code runs directly inside the remote container environment. Code edits, syntax checks, and builds occur inside the container on `/saturn`.
+
+However, graphical emulators (Kronos / Mednafen) must be launched on your host machine. For local testing:
+
+- **Shared Volume / Mount:** Ensure your workspace directory is mounted (`-v $(pwd):/saturn`), or accessible over a network share (NFS, SMB, or `sshfs`).
+- **Artifact Access:** When compilation completes inside the remote container, the resulting `.iso`, `.cue`, and `.elf` files write back to the shared directory.
+- **Run Emulator:** Launch Kronos or Mednafen from your local host targeting the shared `.cue` file (`kronos -a ${workspaceFolder}/helloworld/helloworld.cue`).
 
 </details>
 
-  <br/>
+<br/>
 
 ---
 
@@ -146,6 +154,8 @@ Emulator tasks invoke Kronos or Mednafen on your host machine, pointing to the g
 ## Complete `.vscode/tasks.json` Templates
 
 Depending on which workflow you select, choose the corresponding `.vscode/tasks.json` template for your project.
+
+> **Note on `$SATURN_CMAKE`:** `$SATURN_CMAKE` is automatically defined by `saturn-docker`'s environment setup inside the container (see [Part 1](./develop_on_sega_saturn_part1#what-saturn-docker-installs)).
 
 ### Template for Workflow A (Local Host calling Docker)
 
@@ -194,7 +204,7 @@ In **Workflow A**, VS Code runs on your host machine and invokes `docker run` to
 }
 ```
 
-### Template for Workflows B & C (Direct Container Execution: Attached Container / Remote-SSH)
+### Template for Workflows B & C (Direct Container Execution)
 
 In **Workflows B & C**, VS Code is already connected inside the container environment. Compilation commands run directly in the container shell without `docker run`:
 
@@ -230,6 +240,10 @@ In **Workflows B & C**, VS Code is already connected inside the container enviro
 ```
 
 > **Tip:** Adjust paths (such as `helloworld/helloworld.cue`) to match your specific project executable and cue sheet name.
+>
+> **Note on Emulator Launch Tasks:** Emulator tasks are omitted from Workflows B & C because GUI emulators (Kronos / Mednafen) run on your host OS. Launch emulators directly from your host terminal or host VS Code instance, pointing to the shared build artifacts.
+>
+> **Note on Task Labels:** Task labels (`"Compile Docker [...]"` vs. `"Compile Container [...]"`) distinguish whether the task invokes an external `docker run` command from the host (Workflow A) or compiles directly inside an attached container shell (Workflows B & C).
 
 ---
 
