@@ -16,7 +16,7 @@ permalink: /develop_on_sega_saturn_part4
   - [Windows](#windows)
   - [Docker USB Passthrough](#docker-usb-passthrough)
 - [Retrieve Logs from Saturn](#retrieve-logs-from-saturn)
-- [Use with saturn\_mandelbrot](#use-with-saturn_mandelbrot)
+- [Use with SRL-Mandelbrot](#use-with-srl-mandelbrot)
 - [Troubleshooting](#troubleshooting)
 - [Next Steps](#next-steps)
 
@@ -102,6 +102,11 @@ cmake -DCMAKE_BUILD_TYPE=Release ..
 make
 ```
 
+> **Important Driver Note for Windows:** Windows installs the FTDI Virtual COM Port driver by default. You must replace it with the generic **WinUSB** driver using [Zadig](https://zadig.akeo.ie/):
+> 1. Launch Zadig, select **Options -> List All Devices**.
+> 2. Select **FT245R USB FIFO** (VID `0403`, PID `6001`).
+> 3. Select **WinUSB** as target driver and click **Replace Driver**.
+
 </details>
 
 ### Docker USB Passthrough
@@ -133,16 +138,16 @@ Inside the container, `ftx` can talk directly to your USB Gamer's Cartridge.
 
 </details>
 
-Start debug console mode from the build folder:
+Start debug console mode (`-c` for read-only log view, or `-t` for interactive bidirectional terminal):
 
 ```bash
 ./ftx -c
 ```
 
-If needed, specify USB VID/PID explicitly:
+If needed, specify USB VID/PID explicitly using `--vid` and `--pid`:
 
 ```bash
-./ftx -v 0x0403 -p 0x6001 -c
+./ftx --vid 0x0403 --pid 0x6001 -c
 ```
 
 ## Retrieve Logs from Saturn
@@ -152,26 +157,55 @@ If needed, specify USB VID/PID explicitly:
 3. Boot your Saturn program.
 4. Watch trace lines appear in real time in the terminal.
 
-## Use with saturn_mandelbrot
+## Use with SRL-Mandelbrot
 
-Reference project:
+Reference projects:
 
-- [saturn_mandelbrot](https://github.com/willll/saturn_mandelbrot)
+- [SRL-Mandelbrot](https://github.com/willll/SRL-Mandelbrot) – Mandelbrot rendering demo built with SaturnRingLib.
+- [SaturnRingLib (SRL)](https://github.com/ReyeMe/SaturnRingLib) – Easy-to-use C++ wrapper for SGL (Sega Graphic Library).
 
-As of tag [v1.0](https://github.com/willll/saturn_mandelbrot/releases/tag/v1.0), `saturn_mandelbrot` ships with built-in trace output. No code changes are needed to see logs.
+### What Is SaturnRingLib (SRL)?
 
-Typical trace flow:
+[SaturnRingLib (SRL)](https://github.com/ReyeMe/SaturnRingLib) is an object-oriented C++ framework designed to simplify Sega Saturn development by providing high-level abstractions on top of SGL:
 
-1. Build `saturn_mandelbrot` v1.0 (from Part 3 workflow).
-2. Turn on the Sega Saturn with the USB Gamer's Cartridge inserted.
-3. Use `ftx` to upload the raw binary to RAM (`0x06004000`) and execute it. Then, start the debug console (`-c`):
+- **Graphics & Bitmaps:** Simplifies VDP1 sprite/texture creation and palette management (`SRL::Bitmap::IBitmap`).
+- **Slave SH-2 Offloading:** Easily offloads heavy computational loops (such as Mandelbrot pixel calculation) to the secondary SH-2 CPU via `SRL::Slave::ExecuteOnSlave()`.
+- **Integrated Memory & Debugging:** Provides structured memory allocation helpers alongside built-in debug logging channels.
+
+### Building SRL-Mandelbrot & Enabling Debug Traces
+
+To build `SRL-Mandelbrot` and capture trace output over USB:
+
+1. Clone the repository:
 
    ```bash
-   ./ftx -x path/to/build/mandelbrot.bin 0x06004000
+   git clone https://github.com/willll/SRL-Mandelbrot.git
+   cd SRL-Mandelbrot
+   ```
+
+2. Build with Debug flags:
+
+   - **Linux (`saturn-docker` / `make`):**
+     ```bash
+     docker run --rm -i -v $(pwd):/saturn saturn-docker /bin/bash -c "cd /saturn && make DEBUG=1"
+     ```
+   - **Windows / Batch Helper:**
+     ```cmd
+     compile.bat debug
+     ```
+
+   > **Build Flags Note:** Compiling with `DEBUG=1` (or `compile.bat debug`) defines the `-DDEBUG` preprocessor flag, enabling trace output logging and compiling the final binaries into `BuildDrop/`.
+
+3. Boot on hardware via USB Gamer's Cartridge:
+
+   Upload the compiled binary (`BuildDrop/mandelbrot.bin`) to RAM (`0x06004000`) and launch `ftx` debug console mode (`-c`):
+
+   ```bash
+   ./ftx -x BuildDrop/mandelbrot.bin 0x06004000
    ./ftx -c
    ```
 
-4. Confirm expected lines appear in your terminal:
+4. Confirm expected trace lines appear in your host terminal:
 
    ```text
    trace: main start
