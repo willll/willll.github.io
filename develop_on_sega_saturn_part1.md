@@ -8,9 +8,7 @@ permalink: /develop_on_sega_saturn_part1
 
 ## Table of Contents
 
-- [Develop on Sega Saturn Part 1](#develop-on-sega-saturn-part-1)
-  - [Table of Contents](#table-of-contents)
-  - [Overview](#overview)
+- [Overview](#overview)
   - [Install the Development Environment](#install-the-development-environment)
     - [Before You Start](#before-you-start)
     - [Windows](#windows)
@@ -21,13 +19,6 @@ permalink: /develop_on_sega_saturn_part1
     - [Typical Questions (saturn-docker README)](#typical-questions-saturn-docker-readme)
     - [What This Brings](#what-this-brings)
   - [What saturn-docker Installs](#what-saturn-docker-installs)
-  - [Use Visual Studio Code for Saturn Development](#use-visual-studio-code-for-saturn-development)
-    - [Recommended Extensions](#recommended-extensions)
-    - [Workflow A (Easy): Build with Local Docker from VS Code Tasks](#workflow-a-easy-build-with-local-docker-from-vs-code-tasks)
-    - [Workflow B: SSH into Container/Remote Host](#workflow-b-ssh-into-containerremote-host)
-    - [Dev Containers Option](#dev-containers-option)
-    - [CMake and Build/Run Tasks](#cmake-and-buildrun-tasks)
-    - [Minimal Beginner Loop in VS Code](#minimal-beginner-loop-in-vs-code)
   - [Hello World](#hello-world)
     - [Understand the Source Code](#understand-the-source-code)
     - [Build It with the Docker Image](#build-it-with-the-docker-image)
@@ -41,7 +32,9 @@ permalink: /develop_on_sega_saturn_part1
 
 This series focuses on Sega Saturn development and debugging.
 Part 1 is emulator-first and explains how to install a development environment and build a first program.
-Part 2 will focus on hardware debugging.
+Part 2 focuses on setting up Visual Studio Code for Saturn development.
+Part 3 covers emulator debug traces.
+Part 4 covers hardware USB cartridge logging and debugging.
 More parts will be added in the future as my development environment evolves.
 
 ## Install the Development Environment
@@ -116,7 +109,7 @@ docker build -t saturn-docker . --file ./Dockerfile
 docker run -it --rm -v $(pwd):/saturn saturn-docker /bin/bash
 ```
 
-If `$(pwd)` does not work in PowerShell, run the same commands in WSL.
+If `$(pwd)` does not work in PowerShell, use `${PWD}` or run the commands in WSL.
 
 </details>
 <br/>
@@ -267,87 +260,13 @@ If you want to customize what gets installed, check the build variables section:
 
 - [saturn-docker list of variables](https://github.com/willll/saturn-docker#list-of-variables)
 
-## Use Visual Studio Code for Saturn Development
-
-Reference guide:
-
-- [saturn-docker VisualIdiot.md](https://github.com/willll/saturn-docker/blob/main/Documentation/VisualIdiot.md)
-
-This is a practical VS Code workflow for beginners using saturn-docker.
-
-### Recommended Extensions
-
-- [C/C++ (Microsoft)](https://marketplace.visualstudio.com/items?itemName=ms-vscode.cpptools)
-- [C/C++ Extension Pack (Microsoft)](https://marketplace.visualstudio.com/items?itemName=ms-vscode.cpptools-extension-pack)
-- [CMake Tools (Microsoft)](https://marketplace.visualstudio.com/items?itemName=ms-vscode.cmake-tools)
-- [Dev Containers (Microsoft)](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers)
-- [Remote - SSH (Microsoft)](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-ssh) (optional)
-
-### Workflow A (Easy): Build with Local Docker from VS Code Tasks
-
-This is the simplest option if Docker runs on your local machine.
-
-1. Clone your project (for example `saturn_helloworld` at [https://github.com/willll/saturn_helloworld](https://github.com/willll/saturn_helloworld)) locally.
-2. Open the project folder in VS Code.
-3. Use tasks that call Docker directly (same style as `Compile Docker [RELEASE]` in the sample `.vscode/tasks.json`).
-4. Build from VS Code Terminal or Task Runner.
-
-Why this is beginner-friendly:
-
-- No manual Saturn SDK install on host.
-- Reproducible builds.
-- Easy to reset by rebuilding the container.
-
-### Workflow B: SSH into Container/Remote Host
-
-Use this when your build environment is not local (or when you prefer remote workflows).
-
-1. Start saturn-docker with SSH port mapping (`-p 2222:22`).
-2. Configure Remote-SSH in VS Code.
-3. Connect to your target (example pattern: `ssh root@<host> -p 2222`).
-4. Open the shared Saturn project folder.
-
-Notes:
-
-- In SSH mode, task execution context can be different from local mode.
-- If needed, use sshfs or shared folders so source files are visible where you edit.
-
-### Dev Containers Option
-
-You can also attach VS Code directly to the saturn-docker container via Dev Containers.
-Once attached, builds run inside the container environment.
-
-Important:
-
-- When VS Code terminal is inside the container, emulator launch on the host is not always direct.
-- Keep build and emulator tasks separated if needed (build in container, run emulator from host).
-
-### CMake and Build/Run Tasks
-
-The `saturn_helloworld` repository ([https://github.com/willll/saturn_helloworld](https://github.com/willll/saturn_helloworld)) includes example VS Code task definitions for:
-
-- Compile (release/debug)
-- Clean
-- Run with Kronos
-- Run with Mednafen
-
-Use these as templates and adapt paths for your machine (especially Mednafen binary path).
-
-### Minimal Beginner Loop in VS Code
-
-1. Edit source in VS Code.
-2. Run Docker compile task.
-3. Confirm artifacts are generated (`.elf`, `.iso`, `.cue`).
-4. Launch Kronos or Mednafen with the generated `.cue` file.
-5. Repeat after each change.
-
 ## Hello World
 
 After the environment is ready, start with this project:
 
 - [saturn_helloworld](https://github.com/willll/saturn_helloworld)
 
-This repository is a minimal Sega Saturn example (SBL-based) to validate your full workflow: source code, build, assets, ISO creation, and emulator execution.
+This repository is a minimal Sega Saturn example ([SBL](https://segaretro.org/Saturn_official_documentation#Sega_Basic_Library_.28SBL.29)-based) to validate your full workflow: source code, build, assets, ISO creation, and emulator execution.
 It is the best first checkpoint before moving to larger projects.
 
 ### Understand the Source Code
@@ -457,25 +376,27 @@ Run the build inside saturn-docker:
 > **Tip:** The `-v $(pwd):/saturn` part of the command maps your current local folder to `/saturn` inside the container. This means the compiler instantly sees the files you edit on your machine, with no manual copying required!
 
 ```bash
-docker run -it --rm -v $(pwd):/saturn saturn-docker /bin/sh -c "\
+docker run -it --rm -v $(pwd):/saturn saturn-docker /bin/sh -c '
   mkdir -p /saturn/build && \
   cd /saturn/build && \
   rm -rf * && \
   cmake -DCMAKE_TOOLCHAIN_FILE=$SATURN_CMAKE/sega_saturn.cmake -DCMAKE_INSTALL_PREFIX=/saturn/ .. && \
   make all && \
-  make install"
+  make install
+'
 ```
 
 Debug build variant:
 
 ```bash
-docker run -it --rm -v $(pwd):/saturn saturn-docker /bin/sh -c "\
+docker run -it --rm -v $(pwd):/saturn saturn-docker /bin/sh -c '
   mkdir -p /saturn/build && \
   cd /saturn/build && \
   rm -rf * && \
   cmake -DCMAKE_TOOLCHAIN_FILE=$SATURN_CMAKE/sega_saturn.cmake -DCMAKE_INSTALL_PREFIX=/saturn/ -DCMAKE_BUILD_TYPE=Debug .. && \
   make all && \
-  make install"
+  make install
+'
 ```
 
 ### Build Artifacts (What You Get)
@@ -489,7 +410,7 @@ After build/install, the important outputs are:
 - `helloworld/helloworld.cue`: cue sheet pointing to the ISO track.
 - `build/helloworld.map`: link map file useful for symbol/address analysis.
 
-Tip: if you need to map crash addresses back to source, use `addr2line` with `helloworld.elf`.
+Tip: if you need to map crash addresses back to source, use `addr2line` (`sh-elf-addr2line`, included inside the `saturn-docker` container) with `helloworld.elf`.
 
 ### Run with Kronos
 
@@ -503,9 +424,11 @@ kronos -a ./helloworld/helloworld.cue
 
 Expected result: black background and debug text including `Hello World !`.
 
+![Kronos rendering Hello World example](<{{ '/assets/img/develop_on_sega_saturn_part1/Kronos_helloworld.png' | relative_url }}>)
+
 ### Run with Mednafen
 
-*(You can download Mednafen from the [official Mednafen website](https://mednafen.github.io/).)*
+*(You can download Mednafen from the [official Mednafen website](https://mednafen.github.io/), or use the unofficial [mednafenSSDev](https://github.com/willll/mednafenSSDev) fork tailored for Sega Saturn development and debug traces.)*
 
 Use your Mednafen binary and the same cue file:
 
@@ -513,7 +436,7 @@ Use your Mednafen binary and the same cue file:
 mednafen ./helloworld/helloworld.cue
 ```
 
-If you are using the custom Mednafen build from your setup, run that binary path instead (for example the path configured in the repository VS Code tasks).
+If you are using the custom `mednafenSSDev` build from your setup, run that binary path instead.
 
 ### Quick Troubleshooting
 
@@ -523,4 +446,4 @@ If you are using the custom Mednafen build from your setup, run that binary path
 
 ## Next Steps
 
-[Part 2](/develop_on_sega_saturn_part2) will cover debugging with logs.
+[Part 2](./develop_on_sega_saturn_part2) covers setting up Visual Studio Code for Sega Saturn development.
