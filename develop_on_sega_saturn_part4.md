@@ -9,16 +9,20 @@ permalink: /develop_on_sega_saturn_part4
 ## Table of Contents
 
 - [Overview](#overview)
-  - [How USB Gamer's Cartridge Logging Works](#how-usb-gamers-cartridge-logging-works)
-  - [Install and Use ftx](#install-and-use-ftx)
-  - [Retrieve Logs from Saturn](#retrieve-logs-from-saturn)
-  - [Use with saturn\_mandelbrot](#use-with-saturn_mandelbrot)
-  - [Troubleshooting](#troubleshooting)
-  - [Next Steps](#next-steps)
+- [How USB Gamer's Cartridge Logging Works](#how-usb-gamers-cartridge-logging-works)
+- [Install and Use ftx](#install-and-use-ftx)
+  - [Linux (Debian/Ubuntu)](#linux-debianubuntu)
+  - [macOS (Apple Silicon & Intel)](#macos-apple-silicon--intel)
+  - [Windows](#windows)
+  - [Docker USB Passthrough](#docker-usb-passthrough)
+- [Retrieve Logs from Saturn](#retrieve-logs-from-saturn)
+- [Use with saturn\_mandelbrot](#use-with-saturn_mandelbrot)
+- [Troubleshooting](#troubleshooting)
+- [Next Steps](#next-steps)
 
 ## Overview
 
-This part focuses on retrieving debug logs from a real Sega Saturn using a USB Gamer's Cartridge.
+After setting up the toolchain ([Part 1](./develop_on_sega_saturn_part1)), configuring VS Code ([Part 2](./develop_on_sega_saturn_part2)), and testing debug traces in emulators ([Part 3](./develop_on_sega_saturn_part3)), this final part focuses on retrieving debug logs from a real Sega Saturn using a USB Gamer's Cartridge.
 
 In this workflow, logs are read on the host with `ftx`:
 
@@ -100,6 +104,35 @@ make
 
 </details>
 
+### Docker USB Passthrough
+
+If you prefer running `ftx` directly inside `saturn-docker` without installing host compilation libraries, pass host USB devices into the container using device cgroup rules and volume mounts:
+
+<details markdown="1">
+<summary style="cursor: pointer;"><strong>👉 Click here to expand Docker USB Passthrough instructions</strong></summary><br/>
+
+Launch `saturn-docker` with USB device access:
+
+```bash
+docker run -it --rm \
+  -v $(pwd):/saturn \
+  -v /dev/bus/usb:/dev/bus/usb \
+  -v /dev:/dev \
+  --device-cgroup-rule='c 188:* rmw' \
+  --device-cgroup-rule='c 189:* rmw' \
+  --user $(id -u):$(id -g) \
+  saturn-docker /bin/bash
+```
+
+What these flags do:
+- `-v /dev/bus/usb:/dev/bus/usb` & `-v /dev:/dev`: Mounts host USB device nodes into the container environment.
+- `--device-cgroup-rule='c 188:* rmw'` & `'c 189:* rmw'`: Grants read/write/mknod permissions for USB serial and FTDI character devices (major `188` for `ttyUSB`, major `189` for USB bus nodes).
+- `--user $(id -u):$(id -g)`: Runs container processes as your host user account to preserve USB file permissions.
+
+Inside the container, `ftx` can talk directly to your USB Gamer's Cartridge.
+
+</details>
+
 Start debug console mode from the build folder:
 
 ```bash
@@ -118,8 +151,6 @@ If needed, specify USB VID/PID explicitly:
 2. Start `ftx` debug console mode on host (`./ftx -c`).
 3. Boot your Saturn program.
 4. Watch trace lines appear in real time in the terminal.
-
-
 
 ## Use with saturn_mandelbrot
 
