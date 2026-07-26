@@ -9,23 +9,23 @@ permalink: /develop_on_sega_saturn_part3
 ## Table of Contents
 
 - [Overview](#overview)
-  - [What Is a Debug Trace?](#what-is-a-debug-trace)
-  - [How to Retrieve Traces](#how-to-retrieve-traces)
-    - [Kronos](#kronos)
-    - [Mednafen](#mednafen)
-  - [Example Project: saturn\_mandelbrot](#example-project-saturn_mandelbrot)
-    - [Where Debug Output Is Implemented](#where-debug-output-is-implemented)
-    - [Add Trace Calls in the Program](#add-trace-calls-in-the-program)
-    - [Build with saturn-docker](#build-with-saturn-docker)
-    - [Run It](#run-it)
-    - [Expected Success Output](#expected-success-output)
-    - [Retrieve Traces with Emulators](#retrieve-traces-with-emulators)
-  - [Next Steps](#next-steps)
+- [What Is a Debug Trace?](#what-is-a-debug-trace)
+- [How to Retrieve Traces](#how-to-retrieve-traces)
+  - [Kronos](#kronos)
+  - [Mednafen](#mednafen)
+- [Example Project: saturn\_mandelbrot](#example-project-saturn_mandelbrot)
+  - [Where Debug Output Is Implemented](#where-debug-output-is-implemented)
+  - [Trace Calls in the Program](#trace-calls-in-the-program)
+  - [Build with saturn-docker](#build-with-saturn-docker)
+  - [Run It](#run-it)
+  - [Expected Success Output](#expected-success-output)
+  - [Retrieve Traces with Emulators](#retrieve-traces-with-emulators)
+- [Next Steps](#next-steps)
 
 ## Overview
 
-Part 1 focused on setting up the toolchain and running your first program.
-Part 2 covered setting up Visual Studio Code for Saturn development.
+[Part 1](./develop_on_sega_saturn_part1) focused on setting up the toolchain and running your first program.
+[Part 2](./develop_on_sega_saturn_part2) covered setting up Visual Studio Code for Saturn development.
 This part focuses on debug traces: how to add them, how to read them, and how to use them to understand program behavior.
 
 ## What Is a Debug Trace?
@@ -118,10 +118,6 @@ Implementation note:
 - In `mednafenSSDev`, debug cart handling is in `src/ss/cart/debug.cpp`.
 - The debug write handler prints characters with `fputc(..., stdout)` and flushes output.
 
-For real hardware USB cartridge logging, continue with Part 4:
-
-- [Develop on Sega Saturn Part 4](./develop_on_sega_saturn_part4)
-
 ## Example Project: saturn_mandelbrot
 
 Reference project:
@@ -191,7 +187,7 @@ Release build (ninja):
 > **Tip:** Just like in Part 1, `-v $(pwd):/saturn` instantly maps your local project folder into the container, allowing the compiler to read and write your files without manual copying.
 
 ```bash
-docker run -it --rm -v $(pwd):/saturn saturn-docker /bin/sh -c '
+docker run --rm -i -v $(pwd):/saturn saturn-docker /bin/sh -c '
   mkdir -p /saturn/build && \
   cd /saturn/build && \
   rm -rf * && \
@@ -206,7 +202,7 @@ docker run -it --rm -v $(pwd):/saturn saturn-docker /bin/sh -c '
 Debug build (ninja):
 
 ```bash
-docker run -it --rm -v $(pwd):/saturn saturn-docker /bin/sh -c '
+docker run --rm -i -v $(pwd):/saturn saturn-docker /bin/sh -c '
   mkdir -p /saturn/build && \
   cd /saturn/build && \
   rm -rf * && \
@@ -219,13 +215,16 @@ docker run -it --rm -v $(pwd):/saturn saturn-docker /bin/sh -c '
 '
 ```
 
+> **Note on Build Generators:** These commands demonstrate using `Ninja` (`-G Ninja` and `ninja install`), but `Make` (`make all && make install`) can also be used as a standard alternative.
+
 Important artifacts:
 
-- `mandelbrot/mandelbrot.elf`
-- `build/mandelbrot.bin`
-- `build/IP.BIN`
-- `mandelbrot/mandelbrot.iso`
-- `mandelbrot/mandelbrot.cue`
+- **Build Intermediaries (in `build/`):**
+  - `build/mandelbrot.bin` – Raw binary compiled by SH-2 GCC.
+  - `build/IP.BIN` – Initial Program / Saturn disc boot sector.
+- **Installed Outputs (in `mandelbrot/` via `ninja install` / `make install`):**
+  - `mandelbrot/mandelbrot.elf` – Executable ELF with debug symbols (used for `sh-elf-addr2line`).
+  - `mandelbrot/mandelbrot.iso` & `mandelbrot/mandelbrot.cue` – Final disc image ready for emulators.
 
 ### Run It
 
