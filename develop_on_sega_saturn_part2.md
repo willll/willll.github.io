@@ -13,18 +13,20 @@ permalink: /develop_on_sega_saturn_part2
 - [Recommended VS Code Extensions](#recommended-vs-code-extensions)
 - [Workflow Options](#workflow-options)
   - [Workflow A: Local Docker Tasks (Recommended)](#workflow-a-local-docker-tasks-recommended)
-  - [Workflow B: Dev Containers](#workflow-b-dev-containers)
+  - [Workflow B: Attach VS Code to Running Container](#workflow-b-attach-vs-code-to-running-container)
   - [Workflow C: Remote - SSH](#workflow-c-remote---ssh)
 - [Configuring VS Code Tasks](#configuring-vs-code-tasks)
   - [Build Tasks](#build-tasks)
   - [Emulator Launch Tasks](#emulator-launch-tasks)
-- [Complete `.vscode/tasks.json` Template](#complete-vscodetasksjson-template)
+- [Complete `.vscode/tasks.json` Templates](#complete-vscodetasksjson-templates)
+  - [Template for Workflow A (Local Host calling Docker)](#template-for-workflow-a-local-host-calling-docker)
+  - [Template for Workflows B & C (Direct Container Execution)](#template-for-workflows-b--c-direct-container-execution-attached-container--remote-ssh)
 - [C/C++ IntelliSense Configuration](#cc-intellisense-configuration)
 - [Next Steps](#next-steps)
 
 ## Overview
 
-Part 1 covered installing the containerized Sega Saturn toolchain (`saturn-docker`) and building a basic project from the command line.
+[Part 1](./develop_on_sega_saturn_part1) covered installing the containerized Sega Saturn toolchain ([saturn-docker](https://github.com/willll/saturn-docker)) and building a basic project from the command line.
 
 Part 2 focuses on setting up **Visual Studio Code** as a complete IDE for Sega Saturn development. With a properly configured editor, you can edit source code, trigger Docker builds with hotkeys, inspect compilation outputs, and launch emulators directly from VS Code.
 
@@ -34,10 +36,10 @@ Reference guide:
 
 ## Prerequisites
 
-Before configuring VS Code, ensure you have completed Part 1:
+Before configuring VS Code, ensure you have completed [Part 1](./develop_on_sega_saturn_part1):
 
 - Docker (or Rancher Desktop / Colima / Podman) installed and running.
-- The `saturn-docker` image built locally (`docker build -t saturn-docker .`).
+- The `saturn-docker` image built locally (`docker build -t saturn-docker .`), or an alternative toolchain/SDK setup such as [SaturnRingLib](https://github.com/ReyeMe/SaturnRingLib), [libyaul-docker](https://github.com/yaul-org/libyaul-docker), or [Jo Engine](https://github.com/johannes-fetz/joengine).
 - Visual Studio Code installed on your host machine.
 
 ## Recommended VS Code Extensions
@@ -56,6 +58,9 @@ Open VS Code Extensions (`Ctrl+Shift+X` or `Cmd+Shift+X`) and install the follow
 
 This is the simplest setup for most developers:
 
+<details markdown="1">
+<summary style="cursor: pointer;"><strong>👉 Click here to expand Workflow A instructions</strong></summary>
+
 1. Keep your source code on your host machine.
 2. Edit files natively in VS Code.
 3. Configure VS Code build tasks (`.vscode/tasks.json`) to run `docker run` commands against your local workspace.
@@ -63,44 +68,64 @@ This is the simplest setup for most developers:
 
 **Advantages:** Emulators run directly on your host GPU/display server without complex X11/Wayland forwarding, while compilation happens inside the container.
 
+</details>
+
+<br/>
+
 ---
 
-### Workflow B: Dev Containers
+### Workflow B: Attach VS Code to Running Container
 
-If you prefer full container integration where VS Code's extension host runs inside Docker:
+Instead of generating complex container configurations, you can attach VS Code directly to a container running in your terminal:
 
-1. Create a `.devcontainer/devcontainer.json` file in your repository:
+<details markdown="1">
+<summary style="cursor: pointer;"><strong>👉 Click here to expand Workflow B instructions</strong></summary>
 
-```json
-{
-  "name": "Sega Saturn Dev",
-  "image": "saturn-docker:latest",
-  "customizations": {
-    "vscode": {
-      "extensions": [
-        "ms-vscode.cpptools",
-        "ms-vscode.cmake-tools"
-      ]
-    }
-  },
-  "workspaceMount": "source=${localWorkspaceFolder},target=/saturn,type=bind",
-  "workspaceFolder": "/saturn"
-}
-```
+1. **Start the container in your terminal**, sharing your project folder between host and container:
+   ```bash
+   docker run -it --rm -v $(pwd):/saturn saturn-docker /bin/bash
+   ```
+2. **Attach VS Code to the running container**:
+   - Open VS Code with the **Dev Containers** extension installed.
+   - Open the Command Palette (`Ctrl+Shift+P` / `Cmd+Shift+P`).
+   - Select **Dev Containers: Attach to Running Container...** and choose your running `saturn-docker` instance.
+3. **Open the shared project folder**:
+   - A new VS Code window will open connected to the container's environment.
+   - Click **Open Folder** and select `/saturn` (the folder shared between the host and container).
+4. **Develop and build inside the container**:
+   - All source edits in VS Code are saved directly to your shared host directory.
+   - You can compile inside the integrated terminal using the Saturn toolchain (`sh-elf-gcc`, `cmake`, `make`).
 
-2. Open the Command Palette (`Ctrl+Shift+P` / `Cmd+Shift+P`) and choose **Dev Containers: Reopen in Container**.
+> **Note:** Build tasks execute directly inside the container environment, while emulators (Kronos / Mednafen) can be launched on the host machine pointing to the shared build artifacts.
 
-> **Note:** When using Dev Containers, build tasks execute directly in the container terminal (`sh-elf-gcc`), but host emulators should still be invoked on the host machine.
+</details>
+
+<br/>
 
 ---
 
 ### Workflow C: Remote - SSH
 
-Use this if your build engine or test machine runs on a dedicated server:
+Use this if your build engine or test machine runs on a dedicated server or virtual machine:
 
-1. Launch `saturn-docker` with SSH enabled (`-p 2222:22`).
-2. Use VS Code **Remote - SSH** to connect (`ssh root@<host-ip> -p 2222`).
-3. Open `/saturn` in VS Code and develop remotely.
+<details markdown="1">
+<summary style="cursor: pointer;"><strong>👉 Click here to expand Workflow C instructions</strong></summary>
+
+1. **Launch `saturn-docker` with SSH enabled** and your workspace folder mounted:
+   ```bash
+   docker run -d -p 2222:22 -v $(pwd):/saturn saturn-docker
+   ```
+2. **Use VS Code Remote - SSH to connect**:
+   ```bash
+   ssh root@<host-ip> -p 2222
+   ```
+3. **Open `/saturn` in VS Code** and develop remotely.
+
+> **Important Note on Shared Drives:** When using Remote - SSH, VS Code connects directly inside the remote container environment. Code editing and builds take place inside the container. However, for local testing (launching Kronos or Mednafen on your local machine), a shared drive or mounted volume (such as `-v $(pwd):/saturn`, NFS, or SMB) is **necessary** so your local host can access the compiled build artifacts (`.iso`, `.cue`, `.elf`).
+
+</details>
+
+  <br/>
 
 ---
 
@@ -118,9 +143,13 @@ Emulator tasks invoke Kronos or Mednafen on your host machine, pointing to the g
 
 ---
 
-## Complete `.vscode/tasks.json` Template
+## Complete `.vscode/tasks.json` Templates
 
-Create or update `.vscode/tasks.json` in your Saturn project with the following template:
+Depending on which workflow you select, choose the corresponding `.vscode/tasks.json` template for your project.
+
+### Template for Workflow A (Local Host calling Docker)
+
+In **Workflow A**, VS Code runs on your host machine and invokes `docker run` to execute build steps inside container volume mounts:
 
 ```json
 {
@@ -129,7 +158,7 @@ Create or update `.vscode/tasks.json` in your Saturn project with the following 
     {
       "label": "Compile Docker [RELEASE]",
       "type": "shell",
-      "command": "docker run -it --rm -v ${workspaceFolder}:/saturn saturn-docker /bin/sh -c 'mkdir -p /saturn/build && cd /saturn/build && rm -rf * && cmake -DCMAKE_TOOLCHAIN_FILE=$SATURN_CMAKE/sega_saturn.cmake -DCMAKE_INSTALL_PREFIX=/saturn/ .. && make all && make install'",
+      "command": "docker run --rm -i -v ${workspaceFolder}:/saturn saturn-docker /bin/sh -c 'mkdir -p /saturn/build && cd /saturn/build && rm -rf * && cmake -DCMAKE_TOOLCHAIN_FILE=$SATURN_CMAKE/sega_saturn.cmake -DCMAKE_INSTALL_PREFIX=/saturn/ .. && make all && make install'",
       "group": {
         "kind": "build",
         "isDefault": true
@@ -139,7 +168,7 @@ Create or update `.vscode/tasks.json` in your Saturn project with the following 
     {
       "label": "Compile Docker [DEBUG]",
       "type": "shell",
-      "command": "docker run -it --rm -v ${workspaceFolder}:/saturn saturn-docker /bin/sh -c 'mkdir -p /saturn/build && cd /saturn/build && rm -rf * && cmake -DCMAKE_TOOLCHAIN_FILE=$SATURN_CMAKE/sega_saturn.cmake -DCMAKE_INSTALL_PREFIX=/saturn/ -DCMAKE_BUILD_TYPE=Debug .. && make all && make install'",
+      "command": "docker run --rm -i -v ${workspaceFolder}:/saturn saturn-docker /bin/sh -c 'mkdir -p /saturn/build && cd /saturn/build && rm -rf * && cmake -DCMAKE_TOOLCHAIN_FILE=$SATURN_CMAKE/sega_saturn.cmake -DCMAKE_INSTALL_PREFIX=/saturn/ -DCMAKE_BUILD_TYPE=Debug .. && make all && make install'",
       "group": "build",
       "problemMatcher": ["$gcc"]
     },
@@ -159,6 +188,41 @@ Create or update `.vscode/tasks.json` in your Saturn project with the following 
       "label": "Run with Mednafen",
       "type": "shell",
       "command": "mednafen ${workspaceFolder}/helloworld/helloworld.cue",
+      "problemMatcher": []
+    }
+  ]
+}
+```
+
+### Template for Workflows B & C (Direct Container Execution: Attached Container / Remote-SSH)
+
+In **Workflows B & C**, VS Code is already connected inside the container environment. Compilation commands run directly in the container shell without `docker run`:
+
+```json
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Compile Container [RELEASE]",
+      "type": "shell",
+      "command": "mkdir -p ${workspaceFolder}/build && cd ${workspaceFolder}/build && rm -rf * && cmake -DCMAKE_TOOLCHAIN_FILE=$SATURN_CMAKE/sega_saturn.cmake -DCMAKE_INSTALL_PREFIX=${workspaceFolder}/ .. && make all && make install",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": ["$gcc"]
+    },
+    {
+      "label": "Compile Container [DEBUG]",
+      "type": "shell",
+      "command": "mkdir -p ${workspaceFolder}/build && cd ${workspaceFolder}/build && rm -rf * && cmake -DCMAKE_TOOLCHAIN_FILE=$SATURN_CMAKE/sega_saturn.cmake -DCMAKE_INSTALL_PREFIX=${workspaceFolder}/ -DCMAKE_BUILD_TYPE=Debug .. && make all && make install",
+      "group": "build",
+      "problemMatcher": ["$gcc"]
+    },
+    {
+      "label": "Clean Build Directory",
+      "type": "shell",
+      "command": "rm -rf ${workspaceFolder}/build ${workspaceFolder}/helloworld/*.iso ${workspaceFolder}/helloworld/*.cue ${workspaceFolder}/helloworld/*.elf",
       "problemMatcher": []
     }
   ]
@@ -193,6 +257,8 @@ To prevent VS Code from showing false syntax errors for Sega Saturn SDK headers 
   "version": 4
 }
 ```
+
+> **Tip:** When using **Dev Containers**, IntelliSense automatically resolves SDK headers from `/opt/saturn/**`. When developing in **Local Docker Task** mode, you can copy or mount local copies of the SDK headers (e.g. SBL, Yaul, Jo Engine) and add their paths to `"includePath"` to enable code completion and eliminate squiggly lines.
 
 ---
 
