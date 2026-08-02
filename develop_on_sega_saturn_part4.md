@@ -157,7 +157,6 @@ What these flags do:
 - `-p 2222:22`: Forwards host port 2222 to container SSH port 22.
 - `--user 1000:1000`: Runs container processes with host user/group IDs to preserve USB device node permissions.
 - `-v /home/will/tmp/:/saturn`: Mounts your local Saturn workspace directory into `/saturn`.
-- `-e GIT_...`: Configures Git committer and author credentials inside the container environment.
 
 Inside the container, `ftx` can talk directly to your [USB Gamer's Cartridge](https://ppcenter.webou.net/satcart/).
 
