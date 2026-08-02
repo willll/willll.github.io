@@ -18,6 +18,7 @@ permalink: /develop_on_sega_saturn_part4
   - [Docker USB Passthrough](#docker-usb-passthrough)
 - [Retrieve Logs from Saturn](#retrieve-logs-from-saturn)
 - [Use with SRL-Mandelbrot](#use-with-srl-mandelbrot)
+  - [Video Demonstration](#video-demonstration)
 - [Troubleshooting](#troubleshooting)
 - [Next Steps](#next-steps)
 
@@ -243,13 +244,32 @@ To build `SRL-Mandelbrot` and capture trace output over USB:
 
 4. Confirm expected trace lines appear in your host terminal:
 
-   ```text
-   Starting
-   Initializing Renderer
-   Initializing 352x240 Canvas
-   Starting Render Zone 0: Full Mandelbrot View
-   Initialized Renderer
-   ```
+    ```text
+    TESTING : Starting
+    TESTING : Initializing Renderer
+    TESTING : Initializing 352x240 Canvas
+    TESTING : Starting Render Zone 0: Full Mandelbrot View
+    TESTING : Initialized Renderer
+    TESTING : render :: Complete for Zone 0 (Full Mandelbrot View)! 5s timer started...
+    TESTING : 5s Elapsed! Cleared screen & switching to Zoom Zone 1 (Seahorse Valley)
+    TESTING : render :: Complete for Zone 1 (Seahorse Valley)! 5s timer started...
+    TESTING : 5s Elapsed! Cleared screen & switching to Zoom Zone 2 (Deep Seahorse Spiral)
+    TESTING : render :: Complete for Zone 2 (Deep Seahorse Spiral)! 5s timer started...
+    TESTING : 5s Elapsed! Cleared screen & switching to Zoom Zone 3 (Mini Mandelbrot Bulb)
+    ```
+
+### Video Demonstration
+
+Here is a real-time demonstration (*SRL mandelbrot demo with traces*) showcasing `SRL-Mandelbrot` running on physical Sega Saturn hardware while `ftx` captures live trace output (`TESTING : ...`) streamed over the USB Gamer's Cartridge FTDI interface:
+
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; margin-top: 1rem; margin-bottom: 1.5rem;">
+  <iframe src="https://www.youtube.com/embed/Fol1nZI7gI4" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe>
+</div>
+
+The video demonstrates:
+- **Binary Upload & Execution**: Uploading the compiled `Mandelbrot.bin` payload to Saturn RAM and launching `ftx` debug console mode (`./ftx -c`).
+- **Hardware Rendering**: The SH-2 CPUs rendering the 352x240 High Color Mandelbrot set and cycling through the 4 fractal zoom zones.
+- **Real-time Trace Streaming**: Synchronous hardware log messages (`TESTING : render :: Complete for Zone ...` and `TESTING : 5s Elapsed! ...`) streaming over the FTDI USB FIFO interface in CS0 space (`0x22100001` / `0x22200001`) directly to the host terminal console.
 
 ## Troubleshooting
 
