@@ -11,6 +11,7 @@ permalink: /develop_on_sega_saturn_part4
 - [Overview](#overview)
 - [How USB Gamer's Cartridge Logging Works](#how-usb-gamers-cartridge-logging-works)
 - [Install and Use ftx](#install-and-use-ftx)
+  - [Pre-built Binary Release](#pre-built-binary-release)
   - [Linux (Debian/Ubuntu)](#linux-debianubuntu)
   - [macOS (Apple Silicon & Intel)](#macos-apple-silicon--intel)
   - [Windows](#windows)
@@ -42,10 +43,22 @@ This is useful for hardware validation when emulator behavior differs from real 
 
 ## Install and Use ftx
 
+You can either download pre-built binaries directly from [willll/ftx Releases](https://github.com/willll/ftx/releases) or build `ftx` from source.
+
+### Pre-built Binary Release
+
+Download the latest executable for your OS from the [GitHub Releases](https://github.com/willll/ftx/releases) page. On Linux and macOS, grant execution permissions after downloading:
+
+```bash
+chmod +x ftx
+```
+
+---
+
 ### Linux (Debian/Ubuntu)
 
 <details markdown="1">
-<summary style="cursor: pointer;"><strong>👉 Click here to expand Linux instructions</strong></summary><br/>
+<summary style="cursor: pointer;"><strong>👉 Click here to expand Linux build instructions</strong></summary><br/>
 
 Install dependencies:
 
@@ -69,7 +82,7 @@ make
 ### macOS (Apple Silicon & Intel)
 
 <details markdown="1">
-<summary style="cursor: pointer;"><strong>👉 Click here to expand macOS instructions</strong></summary><br/>
+<summary style="cursor: pointer;"><strong>👉 Click here to expand macOS build instructions</strong></summary><br/>
 
 Install dependencies via Homebrew:
 
@@ -92,9 +105,9 @@ make
 ### Windows
 
 <details markdown="1">
-<summary style="cursor: pointer;"><strong>👉 Click here to expand Windows instructions</strong></summary><br/>
+<summary style="cursor: pointer;"><strong>👉 Click here to expand Windows build instructions</strong></summary><br/>
 
-Install dependencies via MSYS2/MinGW or use WSL. The build steps are identical to Linux/macOS:
+Alternatively, download `ftx.exe` from [Releases](https://github.com/willll/ftx/releases), or build from source using MSYS2/MinGW or WSL:
 
 ```bash
 git clone https://github.com/willll/ftx.git
@@ -185,13 +198,17 @@ To build `SRL-Mandelbrot` and capture trace output over USB:
 
    In `SRL-Mandelbrot/makefile`, trace output behavior is controlled by two key variables:
    - `SRL_LOG_LEVEL = TESTING`: Controls the maximum log level to display.
-   - `SRL_LOG_OUTPUT ?= EMULATOR`: Selects the target log output mechanism (`DEV_CART`, `EMULATOR`, or `NONE`).
+   - `SRL_LOG_OUTPUT = EMULATOR`: Selects the target log output mechanism (`DEV_CART`, `EMULATOR`, or `NONE`).
 
    To route log messages directly to the FTDI USB device on real hardware, `SRL_LOG_OUTPUT` must be set to `DEV_CART`. You can pass this flag when running `make`:
 
    - **Linux (`saturn-docker` / `make`):**
      ```bash
      docker run --rm -i -v $(pwd):/saturn saturn-docker /bin/bash -c "cd /saturn && make SRL_LOG_OUTPUT=DEV_CART"
+     ```
+     If switching output targets from a previous build, clean prior objects first:
+     ```bash
+     docker run --rm -i -v $(pwd):/saturn saturn-docker /bin/bash -c "cd /saturn && make clean && make SRL_LOG_OUTPUT=DEV_CART"
      ```
    - **Windows / Batch Helper:**
      ```cmd
@@ -202,23 +219,32 @@ To build `SRL-Mandelbrot` and capture trace output over USB:
 
 3. Boot on hardware via [USB Gamer's Cartridge](https://ppcenter.webou.net/satcart/):
 
-   Upload the compiled binary (`BuildDrop/mandelbrot.bin`) to RAM (`0x06004000`) and launch `ftx` debug console mode (`-c`):
+   Upload the compiled binary (`BuildDrop/Mandelbrot.bin`) to RAM (`0x06004000`) and launch `ftx` debug console mode (`-c`):
 
-   ```bash
-   ./ftx -x BuildDrop/mandelbrot.bin 0x06004000
-   ./ftx -c
-   ```
+   - **Using `ftx` CLI directly:**
+     ```bash
+     ./ftx -x BuildDrop/Mandelbrot.bin 0x06004000
+     ./ftx -c
+     ```
+   - **Windows / Batch Helper:**
+     Alternatively, run the included `run_on_saturn.bat` script to automate uploading and console logging:
+     ```cmd
+     run_on_saturn.bat
+     ```
 
 4. Confirm expected trace lines appear in your host terminal:
 
    ```text
-   trace: main start
-   trace: video on, entering render loop
+   Starting
+   Initializing Renderer
+   Initializing 352x240 Canvas
+   Starting Render Zone 0: Full Mandelbrot View
+   Initialized Renderer
    ```
 
 ## Troubleshooting
 
-- No output in `ftx`: verify cartridge cable/connection and confirm you are running the v1.0 build (or a build with `debug_print(...)` calls).
+- No output in `ftx`: verify cartridge cable/connection and confirm `SRL_LOG_OUTPUT=DEV_CART` was used when compiling.
 - Garbled output: check cartridge USB connection stability and retry with explicit VID/PID.
 - Intermittent logs: reduce trace volume in tight loops and keep messages short.
 - Permission denied / device access error on Linux: this is the most common issue when working with FTDI USB devices on Linux. You need to configure a `udev` rule to grant your user access. To fix this permanently, run these commands:
