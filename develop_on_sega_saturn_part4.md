@@ -273,8 +273,8 @@ lsusb | grep -i "0403:6001"
 
 ## Next Steps
 
-Congratulations! You now have a complete, cross-platform Sega Saturn development environment. 
+You now have real-time hardware trace logging integrated into your Sega Saturn workflow.
 
-By utilizing Docker, you've completely abstracted away the pain of setting up the C compiler toolchain. With CMake and Ninja, your builds are fast and reproducible. And by implementing the debug trace output, you can smoothly develop locally with Kronos or Mednafen, and seamlessly take your project to real hardware via the [USB Gamer's Cartridge](https://ppcenter.webou.net/satcart/) when it's time for real validation.
+Retrieving debug traces directly over the [USB Gamer's Cartridge](https://ppcenter.webou.net/satcart/) with `ftx` gives you host-side visibility when testing on real console hardware, bridging the gap between emulator debugging (with Kronos or Mednafen) and physical hardware validation.
 
-Happy coding!
+Future parts in this series will cover deeper Saturn subsystems, hardware profiling, and advanced hardware debugging workflows.
