@@ -126,28 +126,38 @@ make
 
 ### Docker USB Passthrough
 
-If you prefer running `ftx` directly inside `saturn-docker` without installing host compilation libraries, pass host USB devices into the container using device cgroup rules and volume mounts:
+If you prefer running `ftx` directly inside `saturn-docker` without installing host compilation libraries, you can pass host USB devices into the container using device cgroup rules, `/dev` volume mounts, and proper user permissions:
 
 <details markdown="1">
 <summary style="cursor: pointer;"><strong>👉 Click here to expand Docker USB Passthrough instructions</strong></summary><br/>
 
-Launch `saturn-docker` with USB device access:
+Launch `saturn-docker` with full USB device passthrough:
 
 ```bash
 docker run -it --rm \
-  -v $(pwd):/saturn \
-  -v /dev/bus/usb:/dev/bus/usb \
-  -v /dev:/dev \
-  --device-cgroup-rule='c 188:* rmw' \
+  -e "SRL_INSTALL_ROOT=/saturn/SaturnRingLib" \
+  -p 2222:22 \
+  --add-host=host.docker.internal:host-gateway \
+  --device-cgroup-rule='c 188:0 rmw' \
   --device-cgroup-rule='c 189:* rmw' \
-  --user $(id -u):$(id -g) \
-  saturn-docker /bin/bash
+  -v /dev/bus/usb:/dev/bus/usb \
+  -v /var/run/dbus:/var/run/dbus \
+  -v /dev:/dev \
+  -v /home/will/tmp/:/saturn \
+  --user 1000:1000 \
+  saturn-docker:latest /bin/bash
 ```
 
 What these flags do:
-- `-v /dev/bus/usb:/dev/bus/usb` & `-v /dev:/dev`: Mounts host USB device nodes into the container environment.
-- `--device-cgroup-rule='c 188:* rmw'` & `'c 189:* rmw'`: Grants read/write/mknod permissions for USB serial and FTDI character devices (major `188` for `ttyUSB`, major `189` for USB bus nodes).
-- `--user $(id -u):$(id -g)`: Runs container processes as your host user account to preserve USB file permissions.
+- `--device-cgroup-rule='c 188:0 rmw'` & `'c 189:* rmw'`: Grants read/write/mknod permissions for USB serial (`ttyUSB0`, major 188) and FTDI USB bus character devices (major 189).
+- `-v /dev/bus/usb:/dev/bus/usb` & `-v /dev:/dev`: Mounts host USB device bus trees and device filesystem nodes directly into the container environment.
+- `-v /var/run/dbus:/var/run/dbus`: Mounts host D-Bus system socket for daemon communication.
+- `-e "SRL_INSTALL_ROOT=/saturn/SaturnRingLib"`: Defines the path to SaturnRingLib inside the container.
+- `--add-host=host.docker.internal:host-gateway`: Resolves host IP address inside container for host-container network communication.
+- `-p 2222:22`: Forwards host port 2222 to container SSH port 22.
+- `--user 1000:1000`: Runs container processes with host user/group IDs to preserve USB device node permissions.
+- `-v /home/will/tmp/:/saturn`: Mounts your local Saturn workspace directory into `/saturn`.
+- `-e GIT_...`: Configures Git committer and author credentials inside the container environment.
 
 Inside the container, `ftx` can talk directly to your [USB Gamer's Cartridge](https://ppcenter.webou.net/satcart/).
 
