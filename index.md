@@ -6,7 +6,7 @@ layout: default
 
 [SEGA SATURN Modem Part 1 : USB to RJ11 adapter modification](./ssmodem_part1)
 
-# SEGA SATURN Development
+# SEGA SATURN Development : BASIC
 
 [Develop on Sega Saturn Part 1 : Docker C compiler and emulator](./develop_on_sega_saturn_part1)
 
